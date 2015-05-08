@@ -7,6 +7,7 @@ package dotsandboxes;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -39,7 +40,7 @@ public class DotsAndBoxes extends JFrame implements Runnable{
 
         gameView = new GPanel();
         gameView.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        gameView.setSize(490, 490);
+        gameView.setPreferredSize(new Dimension(800,600));
         gameView.setBackground(Color.white);
         gameView.addMouseListener(new MouseListener(){
             
