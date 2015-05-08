@@ -40,7 +40,7 @@ public class DotsAndBoxes extends JFrame implements Runnable{
 
         gameView = new GPanel();
         gameView.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        gameView.setPreferredSize(new Dimension(800,600));
+        gameView.setSize(496,496);
         gameView.setBackground(Color.white);
         gameView.addMouseListener(new MouseListener(){
             
@@ -69,8 +69,12 @@ public class DotsAndBoxes extends JFrame implements Runnable{
         });
         
         this.setLayout(new BorderLayout());
-        this.add(gameView,BorderLayout.CENTER);
-        this.setSize(496, 496);
+        this.add(new JPanel(),BorderLayout.NORTH);
+        this.add(new JPanel(),BorderLayout.SOUTH);
+        this.add(new JPanel(),BorderLayout.WEST);
+        this.add(gameView,BorderLayout.EAST);
+        this.setSize(800, 600);
+        this.setResizable(false);
         this.setVisible(true);
         
         Thread t = new Thread(this);
