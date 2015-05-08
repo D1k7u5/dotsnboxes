@@ -40,4 +40,18 @@ public class Line {
     public int getId(){
         return id;
     }
+    
+    public int getHeight(){
+        return height;
+    }
+    public void setHeight(int h){
+        height = h;
+    }
+    
+    public int getWidth(){
+        return width;
+    }
+    public void setWidth(int w){
+        width = w;
+    }
 }
