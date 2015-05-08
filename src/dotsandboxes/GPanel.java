@@ -32,8 +32,8 @@ public class GPanel extends JPanel {
             super.paintComponent(g);
             g.setColor(Color.WHITE);
             g.drawRect(0, 0, this.getWidth(), this.getHeight());
-            this.drawDotGrid(g);
             this.drawLines(g);
+            this.drawDotGrid(g);
         }
         private void drawDotGrid(Graphics g) {
             int x = 40;
@@ -49,10 +49,16 @@ public class GPanel extends JPanel {
             }
         }
         private void drawLines(Graphics g){
-            int x = 40;
-            int y = 40;
-            for(int i=0 ; i<4 ; i++){
-                
+            int x = 68;
+            int y = 44;
+            int i;
+            for(i=0; i<3 ; i++){
+                while(i<3){
+                    g.setColor(lineList.get(i).getColor());
+                    g.fillRect(x, y, lineList.get(i).getWidth(), lineList.get(i).getHeight());
+                    x = x + 104;
+                }
             }
+            
         }
 }
