@@ -19,8 +19,8 @@ public class Line {
     
 
     public Line(int ID){
-        color = Color.gray;
-        width = 80;
+        color = Color.LIGHT_GRAY;
+        width = 90;
         height = 24;
         this.id = ID;
     }

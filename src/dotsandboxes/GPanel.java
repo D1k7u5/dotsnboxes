@@ -8,6 +8,7 @@ package dotsandboxes;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
@@ -17,48 +18,112 @@ import javax.swing.JPanel;
  */
 public class GPanel extends JPanel {
     
-    ArrayList<Line> lineList;
+    private ArrayList<Line> lineList;
+    private ArrayList<Box> boxList;
+    private int row;
+    private int col;
         
-    public GPanel() {
-            setPreferredSize(new Dimension(496, 496));
+    public GPanel(){
+    }
+    public GPanel(int rows, int columns) {
+            row = rows;
+            col = columns;
+            setPreferredSize(new Dimension((104*(col+1))+10, (104*(row+1))+10));
             lineList = new ArrayList<>();
-            for(int i = 1 ; i <= 24 ; i++){
-                lineList.add(new Line(i));
-            }
+            boxList = new ArrayList<>();
+            initLinesAndBoxes();
         }
 
         @Override
         public void paintComponent(Graphics g) {
+            Graphics2D g2d = (Graphics2D) g;
             super.paintComponent(g);
-            g.setColor(Color.WHITE);
-            g.drawRect(0, 0, this.getWidth(), this.getHeight());
-            this.drawLines(g);
-            this.drawDotGrid(g);
+            g2d.setColor(Color.white);
+            g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
+            this.drawLines(g2d);
+            this.drawDotGrid(g2d);
         }
-        private void drawDotGrid(Graphics g) {
+        private void drawDotGrid(Graphics2D g) {
             int x = 40;
             int y = 40;
-            g.setColor(Color.black);
-            for(int i = 0; i < 4 ; i++){
-                for(int k=0 ; k<4 ; k++){
+            for(int i = 0; i < row+1 ; i++){
+                for(int k=0 ; k<col+1 ; k++){
+                    g.setColor(Color.orange);
                     g.fillOval(x, y, 32, 32);
+                    g.setColor(Color.black);
+                    g.drawOval(x, y, 32, 32);
                     x = x+104;
                 }
                 y = y + 104;
                 x = 40;
             }
         }
-        private void drawLines(Graphics g){
-            int x = 68;
+        private void drawLines(Graphics2D g){
+            int x = 63;
             int y = 44;
-            int i;
-            for(i=0; i<3 ; i++){
-                while(i<3){
-                    g.setColor(lineList.get(i).getColor());
-                    g.fillRect(x, y, lineList.get(i).getWidth(), lineList.get(i).getHeight());
+            int c;
+            int r;
+            int selLine = 0;            
+    //horizontal lines
+            for(r=0;r<row+1;r++){
+                for(c=0; c<col ; c++){
+                    selLine = (r*(2*(row+1))+c);
+                    g.setColor(lineList.get(c).getColor());
+                    g.fillRect(x, y, lineList.get(c).getWidth(), lineList.get(c).getHeight());
+                    g.setColor(Color.black);
+                    g.drawRect(x, y, lineList.get(c).getWidth(), lineList.get(c).getHeight());
                     x = x + 104;
                 }
+                y = y + 104;
+                x = 63;
             }
-            
+    //vertical lines, switched width an height
+            x = 45;
+            y = 63;
+            for(r=0;r<row;r++){
+                for(c=0;c<col+1;c++){
+                    //selLine = ();
+                    g.setColor(lineList.get(c).getColor());
+                    g.fillRect(x, y, lineList.get(c).getHeight(), lineList.get(c).getWidth());
+                    g.setColor(Color.black);
+                    g.drawRect(x, y, lineList.get(c).getHeight(), lineList.get(c).getWidth());
+                    x = x + 104;
+                }
+                y = y + 104;
+                x = 45;
+            }
+        }
+        
+        public void setDimensions(int rows, int columns){
+            row = rows;
+            col = columns;
+            setPreferredSize(new Dimension((104*(col+1))+10, (104*(row+1))+10));
+            initLinesAndBoxes();
+        }
+        
+        private void initLinesAndBoxes(){
+            for(int i = 1 ; i <= (((row+1)*col)+((col+1)*row)) ; i++){
+                lineList.add(new Line(i));
+            }
+            int c = 1;  //counter for box IDs
+            for(int i=1 ; i <= row ; i++){
+                for(int k=1 ; k <= col ; k++){
+                    boxList.add(new Box(c));
+                    int test = (k+(i-1)*(col+col+1));
+                    boxList.get(c-1).setLineN(lineList.get(k+(i-1)*(col+col+1)-1));
+                    boxList.get(c-1).setLineS(lineList.get(k+(i)*(col+col+1)-1));
+                    boxList.get(c-1).setLineE(lineList.get(c+col+((i-1)*(col+1))));
+                    boxList.get(c-1).setLineW(lineList.get(c+col+((i-1)*(col+1))-1));
+                    c++;
+                }
+            }
+        }
+        
+        public int getRows(){
+            return row;
+        }
+        
+        public int getCols(){
+            return col;
         }
 }

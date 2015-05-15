@@ -19,13 +19,49 @@ public class Box {
     private int sideLength;
     private int id;
     
+    public Box(int ID){
+        id = ID;
+        sideLength = 30;
+    }
     public Box(Line n,Line e,Line s,Line w,int ID){
         lineN = n;
         lineE = e;
         lineS = s;
         lineW = w;
-        sideLength = 18;
+        sideLength = 30;
         id = ID;
+    }
+    
+    public Line getLineN() {
+        return lineN;
+    }
+
+    public void setLineN(Line lineN) {
+        this.lineN = lineN;
+    }
+
+    public Line getLineE() {
+        return lineE;
+    }
+
+    public void setLineE(Line lineE) {
+        this.lineE = lineE;
+    }
+
+    public Line getLineS() {
+        return lineS;
+    }
+
+    public void setLineS(Line lineS) {
+        this.lineS = lineS;
+    }
+
+    public Line getLineW() {
+        return lineW;
+    }
+
+    public void setLineW(Line lineW) {
+        this.lineW = lineW;
     }
     
     public void setId(int id) {
