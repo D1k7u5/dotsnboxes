@@ -51,58 +51,60 @@ public class LineDetection {
             // detect XOffset
             int counter = 0;
             int tempRange = lineWidth /2;
+            int xOffset = 1;
+            int tempOffset = 0;
             boolean isXLineHorizontal = false;
             while(xCoordinate > tempRange) {
                 counter++;
                 xCoordinate -= deltaXItr;
-
+                xOffset += tempOffset;
+                
                 if(tempRange == lineWidth /2) {
                     tempRange = lineLength/2;
+                    tempOffset = 0;
                     isXLineHorizontal = true;
                 }
                 else{
                     tempRange = lineWidth /2;
+                    tempOffset = 1;
                     isXLineHorizontal = false;
                 }
 
             }
 
-            int xOffset = (int)(counter/2);
+            xOffset += tempOffset ;
             lineID = xOffset;
 
             // detect YOffset
             counter = 0;
             tempRange = lineWidth /2;
+            tempOffset = 0;
+            int yOffset = 0;
             boolean isYLineHorizontal = false;
             while(yCoordinate > tempRange) {
                 counter++;
                 yCoordinate -= deltaYItr;
+                yOffset += tempOffset;
 
                 if(tempRange == lineWidth /2) {
+                    tempOffset = numberOfBoxes;
                     tempRange = lineLength/2;
-                    isYLineHorizontal = false;
+                    isYLineHorizontal = true;
                 }
                 else{
+                    tempOffset = numberOfBoxes + 1;
                     tempRange = lineWidth /2;
                     isYLineHorizontal = false;
                 }
             }
-            int yOffset = counter * (numberOfBoxes) ;
-            if((counter % 2) == 0) {
-                yOffset++;
-            }
-            
+            yOffset += tempOffset ;
+
             lineID += yOffset;
-            if(isXLineHorizontal == isXLineHorizontal) {
+            if(isXLineHorizontal == isYLineHorizontal) {
                 lineID = -1;
             }
         }
         return lineID;
     }
-    
-//    public static void main(String[] args){
-//          LineDetection ld = new LineDetection(40,24,80,4);
-//          int lineId = ld.getLine(144, 144);
-//    }
     
 }

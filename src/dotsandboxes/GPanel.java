@@ -9,6 +9,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
@@ -16,10 +18,12 @@ import javax.swing.JPanel;
  *
  * @author Remo
  */
-public class GPanel extends JPanel {
+public class GPanel extends JPanel implements MouseListener{
     
     private ArrayList<Line> lineList;
     private ArrayList<Box> boxList;
+    private LineDetection lineDetector;
+    private int selectedLine;
     private int row;
     private int col;
         
@@ -28,10 +32,18 @@ public class GPanel extends JPanel {
     public GPanel(int rows, int columns) {
             row = rows;
             col = columns;
+            
+            row = columns;
+            
             setPreferredSize(new Dimension((104*(col+1))+10, (104*(row+1))+10));
             lineList = new ArrayList<>();
             boxList = new ArrayList<>();
             initLinesAndBoxes();
+            
+            addMouseListener(this);
+            selectedLine = 0;
+            lineDetector = new LineDetection(40+16,24,80, columns);
+            
         }
 
         @Override
@@ -126,4 +138,31 @@ public class GPanel extends JPanel {
         public int getCols(){
             return col;
         }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        
+    
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        selectedLine = lineDetector.getLine(e.getX(), e.getY());
+        System.out.println("Line ID: " + selectedLine);
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    //    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    //    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+    //    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

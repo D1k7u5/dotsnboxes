@@ -124,7 +124,7 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
     
     public void setGameView(int rows, int columns){
         //Game view panel
-        gameView = new GPanel(rows,columns);
+        gameView = new GPanel(rows,columns);   
         this.remove(menuPanel);
         this.remove(dummyPanel1);
         this.remove(dummyPanel2);
