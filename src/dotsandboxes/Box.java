@@ -73,4 +73,18 @@ public class Box {
     }
     
     
+    /**
+     * Returns the Number of seted lines
+    */
+    public int getNumberOfSetedLines(){
+        int counter = 0;
+        
+        if(lineN != null){counter++;}
+        if(lineE != null){counter++;}
+        if(lineS != null){counter++;}
+        if(lineW != null){counter++;}
+        
+        return counter;
+    }
+    
 }
