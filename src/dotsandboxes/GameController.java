@@ -23,8 +23,7 @@ public class GameController implements IBoxObserver, Runnable{
     private int playerIndex;
     
     public GameController(IPlayer p1, IPlayer p2, ArrayList boxes) {
-        
-        
+       
         players[0] = p1;
         players[1] = p2;
         playerModels[0] = new Player(Color.BLUE);
@@ -32,17 +31,18 @@ public class GameController implements IBoxObserver, Runnable{
         boxList = boxes;
         for(int i = 0; i < boxList.size(); i++){
             boxList.get(i).setObserver(this);
-        }
-        
+        } 
     }
     
     
     @Override
     public void boxIsFull(int id) {
-        System.out.println("\n Box "+id+" is full and owned by Player "+(playerIndex+1));
+        playerModels[playerIndex].addBox(id);
     }
     
     private void changePlayer(){
+        System.out.println("player1 owns "+playerModels[0].getBoxes().size()+" boxes");
+        System.out.println("player2 owns "+playerModels[1].getBoxes().size()+" boxes");
         if (playerIndex == 0){
             playerIndex = 1;
         }else{
@@ -53,6 +53,7 @@ public class GameController implements IBoxObserver, Runnable{
     @Override
     public void run() {
         while(true){
+            checkForAWinner();
             int line = players[playerIndex].getTurn();
             if(line != -1){
                 for (int i = 0;i < boxList.size(); i++){
@@ -65,6 +66,14 @@ public class GameController implements IBoxObserver, Runnable{
             } catch (InterruptedException ex) {
                 Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+    }
+
+    private void checkForAWinner() {
+        if ((boxList.size() / 2) < (playerModels[0].getBoxes().size())){
+            System.out.println("Player 1 wins!!");
+        }else if ((boxList.size() / 2) < (playerModels[1].getBoxes().size())){
+            System.out.println("Player 2 wins!!");
         }
     }
     

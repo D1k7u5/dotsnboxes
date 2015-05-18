@@ -21,6 +21,7 @@ public class Box {
     private int sideLength;
     private int id;
     private IBoxObserver observer;
+    private boolean used = false;
     
     public Box(int ID){
         id = ID;
@@ -46,7 +47,8 @@ public class Box {
             lineW.setColor(color);
         }
         
-        if(isBoxFull()){
+        if(!used && isBoxFull()){
+            used = true;
             observer.boxIsFull(this.id);
         }
     }

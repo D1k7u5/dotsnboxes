@@ -6,6 +6,7 @@
 package dotsandboxes;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,6 +14,7 @@ import java.awt.Color;
  */
 public class Player {
     private Color color;
+    private final ArrayList<Integer> ownBoxes = new ArrayList<>();
 
     public Color getColor() {
         return color;
@@ -21,4 +23,15 @@ public class Player {
     public Player(Color color) {
         this.color = color;
     }
+    
+    public void addBox(int id){
+        
+        ownBoxes.add(id);
+    }
+
+    public ArrayList<Integer> getBoxes() {
+        return ownBoxes;
+    }
+    
+    
 }
