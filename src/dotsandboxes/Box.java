@@ -5,6 +5,8 @@
  */
 package dotsandboxes;
 
+import java.awt.Color;
+
 /**
  *
  * @author Remo
@@ -18,6 +20,7 @@ public class Box {
     
     private int sideLength;
     private int id;
+    private IBoxObserver observer;
     
     public Box(int ID){
         id = ID;
@@ -30,6 +33,33 @@ public class Box {
         lineW = w;
         sideLength = 30;
         id = ID;
+    }
+    
+    public void setLine(int lineID,Color color){
+        if(lineID == lineN.getId()){
+            lineN.setColor(color);
+        }else if(lineID == lineE.getId()){
+            lineE.setColor(color);
+        }else if(lineID == lineS.getId()){
+            lineS.setColor(color);
+        }else if(lineID == lineW.getId()){
+            lineW.setColor(color);
+        }
+        
+        if(isBoxFull()){
+            observer.boxIsFull(this.id);
+        }
+    }
+ 
+    private boolean isBoxFull(){
+        boolean result = false;
+        if (lineN.getColor() != Color.LIGHT_GRAY &&
+                lineE.getColor() != Color.LIGHT_GRAY &&
+                lineS.getColor() != Color.LIGHT_GRAY &&
+                lineW.getColor() != Color.LIGHT_GRAY){
+            result = true;
+        }
+        return result;
     }
     
     public Line getLineN() {
@@ -85,6 +115,10 @@ public class Box {
         if(lineW != null){counter++;}
         
         return counter;
+    }
+    
+    public void setObserver(IBoxObserver observer) {
+        this.observer = observer;
     }
     
 }

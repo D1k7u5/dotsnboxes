@@ -5,20 +5,10 @@
  */
 package dotsandboxes;
 
-import java.awt.Color;
-
 /**
  *
  * @author tom
  */
-public class Player {
-    private Color color;
-
-    public Color getColor() {
-        return color;
-    }
-
-    public Player(Color color) {
-        this.color = color;
-    }
+public interface IBoxObserver {
+    void boxIsFull(int id);
 }
