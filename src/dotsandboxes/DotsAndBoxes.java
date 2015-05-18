@@ -41,6 +41,7 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
     private final JTextField fieldRow,fieldCol;
     private final JRadioButton net,loc,com;
     private GPanel gameView;
+    private int gameType = 0;
     
     private ArrayList<Line> lineList;
     
@@ -59,6 +60,7 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
         labelNet = new JLabel("Network Game");
         labelCom = new JLabel("Computer Game");
         loc = new JRadioButton();
+        loc.setSelected(true);
         net = new JRadioButton();
         com = new JRadioButton();
         //Game view panel
@@ -124,7 +126,7 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
     
     public void setGameView(int rows, int columns){
         //Game view panel
-        gameView = new GPanel(rows,columns);   
+        gameView = new GPanel(rows,columns,this.gameType);   
         this.remove(menuPanel);
         this.remove(dummyPanel1);
         this.remove(dummyPanel2);
@@ -173,11 +175,18 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
                 if(Integer.parseInt(this.fieldRow.getText())>6 || Integer.parseInt(this.fieldCol.getText())>8){
                     throw new NumberFormatException("enter columns below 9 and rows below 7");
                 }
+                
                 this.setGameView(Integer.parseInt(this.fieldRow.getText()),Integer.parseInt(this.fieldCol.getText()));
             }
             catch(NumberFormatException nfe){
                 JOptionPane.showMessageDialog(null, nfe.getMessage());
             }
+        }else if (e.getSource() == this.loc){
+            gameType = 0;
+        }else if(e.getSource() == this.net){
+            gameType = 1;
+        }else if(e.getSource() == this.com){
+            gameType = 2;
         }
     }
     public static void main(String[] args) {

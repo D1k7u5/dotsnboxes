@@ -15,7 +15,7 @@ public class Line {
     
     private Color color;
     private int height,width;
-    private int id;
+    private final int id;
     
 
     public Line(int ID){
@@ -26,15 +26,13 @@ public class Line {
     }
     
     public void setColor(Color color) {
-        this.color = color;
+        if(this.color == Color.LIGHT_GRAY){
+            this.color = color;
+        }
     }
     
     public Color getColor() {
         return color;
-    }
-
-    public void setId(int ID){
-        this.id = ID;
     }
     
     public int getId(){

@@ -11,13 +11,14 @@ import java.util.ArrayList;
  *
  * @author davidheer
  */
-public class ComputerLogic {
+public class ComputerLogic implements IPlayer {
     
     ArrayList<Box> box0Line = new ArrayList<>();
     ArrayList<Box> box1Line = new ArrayList<>();
     ArrayList<Box> box2Line = new ArrayList<>();
     ArrayList<Box> box3Line = new ArrayList<>();
     ArrayList<ArrayList> twoLineTube = new ArrayList<>(); //Zusammenhängende Boxen mit zwei Linien, zu offenen Linien
+    private int selectedLine;
 
     public ComputerLogic(){
         
@@ -67,6 +68,19 @@ public class ComputerLogic {
             }
         }
         */
+    }
+
+    @Override
+    public void act() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getTurn() {
+        int result = selectedLine;
+        selectedLine = -1;
+        
+        return result;
     }
     
 }
