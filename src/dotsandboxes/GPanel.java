@@ -92,13 +92,13 @@ public class GPanel extends JPanel implements MouseListener, IPlayer {
         int r;
         int selLine = 0;
         //horizontal lines
-        for (r = 0; r < row + 1; r++) {
+        for (r = 0; r < row +1 ; r++) {
             for (c = 0; c < col; c++) {
-                selLine = (r * (2 * (row + 1)) + c);
-                g.setColor(lineList.get(c).getColor());
-                g.fillRect(x, y, lineList.get(c).getWidth(), lineList.get(c).getHeight());
+                selLine = (r * ( (row *2) +1 ) + c);
+                g.setColor(lineList.get(selLine).getColor());
+                g.fillRect(x, y, lineList.get(selLine).getWidth(), lineList.get(selLine).getHeight());
                 g.setColor(Color.black);
-                g.drawRect(x, y, lineList.get(c).getWidth(), lineList.get(c).getHeight());
+                g.drawRect(x, y, lineList.get(selLine).getWidth(), lineList.get(selLine).getHeight());
                 x = x + 104;
             }
             y = y + 104;
@@ -109,11 +109,11 @@ public class GPanel extends JPanel implements MouseListener, IPlayer {
         y = 63;
         for (r = 0; r < row; r++) {
             for (c = 0; c < col + 1; c++) {
-                //selLine = ();
-                g.setColor(lineList.get(c).getColor());
-                g.fillRect(x, y, lineList.get(c).getHeight(), lineList.get(c).getWidth());
+                selLine = c+ (r * (2* col + 1 )) + col;
+                g.setColor(lineList.get(selLine).getColor());
+                g.fillRect(x, y, lineList.get(selLine).getHeight(), lineList.get(selLine).getWidth());
                 g.setColor(Color.black);
-                g.drawRect(x, y, lineList.get(c).getHeight(), lineList.get(c).getWidth());
+                g.drawRect(x, y, lineList.get(selLine).getHeight(), lineList.get(selLine).getWidth());
                 x = x + 104;
             }
             y = y + 104;
@@ -189,7 +189,7 @@ public class GPanel extends JPanel implements MouseListener, IPlayer {
     public int getTurn() {
         int result = selectedLine;
         selectedLine = -1;
-        System.out.println("Line ID getTurn: " + result);
+//        System.out.println("Line ID getTurn: " + result);
         return result;
     }
 }
