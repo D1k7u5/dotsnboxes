@@ -52,4 +52,8 @@ public class Line {
     public void setWidth(int w){
         width = w;
     }
+
+    void reset() {
+        this.color = Color.LIGHT_GRAY;
+    }
 }

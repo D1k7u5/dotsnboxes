@@ -122,5 +122,12 @@ public class Box {
     public void setObserver(IBoxObserver observer) {
         this.observer = observer;
     }
+
+    void reset() {
+        lineN.reset();
+        lineE.reset();
+        lineS.reset();
+        lineW.reset();
+    }
     
 }

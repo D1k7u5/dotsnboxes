@@ -70,11 +70,26 @@ public class GameController implements IBoxObserver, Runnable{
     }
 
     private void checkForAWinner() {
+        boolean winner = false;
+        
         if ((boxList.size() / 2) < (playerModels[0].getBoxes().size())){
             System.out.println("Player 1 wins!!");
+            winner = true;
         }else if ((boxList.size() / 2) < (playerModels[1].getBoxes().size())){
             System.out.println("Player 2 wins!!");
+            winner = true;
         }
+        if(winner){
+            resetGame();
+        }
+    }
+
+    private void resetGame() {
+        for (int i = 0;i < boxList.size();i++){
+            boxList.get(i).reset();
+        }
+        playerModels[0].reset();
+        playerModels[1].reset();
     }
     
 }
