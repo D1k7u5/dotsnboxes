@@ -128,6 +128,7 @@ public class Box {
         lineE.reset();
         lineS.reset();
         lineW.reset();
+        used = false;
     }
     
 }
