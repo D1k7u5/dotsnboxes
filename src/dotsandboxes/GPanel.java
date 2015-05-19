@@ -18,7 +18,7 @@ import javax.swing.JPanel;
  *
  * @author Remo
  */
-public class GPanel extends JPanel implements MouseListener, IPlayer {
+public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCallback {
 
     private ArrayList<Line> lineList;
     private ArrayList<Box> boxList;
@@ -191,5 +191,11 @@ public class GPanel extends JPanel implements MouseListener, IPlayer {
         selectedLine = -1;
 //        System.out.println("Line ID getTurn: " + result);
         return result;
+    }
+
+    @Override
+    public void winnerIs(String string) {
+        //save data in GUI... rounds, wins...
+        //TODO: correct formal parameters
     }
 }
