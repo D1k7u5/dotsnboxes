@@ -15,6 +15,15 @@ import java.util.ArrayList;
 public class Player {
     private Color color;
     private final ArrayList<Integer> ownBoxes = new ArrayList<>();
+    private int victories = 0;
+
+    public int getVictories() {
+        return victories;
+    }
+
+    public void setVictories(int victories) {
+        this.victories = victories;
+    }
 
     public Color getColor() {
         return color;
@@ -25,7 +34,6 @@ public class Player {
     }
     
     public void addBox(int id){
-        
         ownBoxes.add(id);
     }
 
