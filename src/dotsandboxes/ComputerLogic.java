@@ -18,13 +18,12 @@ public class ComputerLogic implements IPlayer {
     ArrayList<Box> box2Line = new ArrayList<>();
     ArrayList<Box> box3Line = new ArrayList<>();
     ArrayList<ArrayList> twoLineTube = new ArrayList<>(); //Zusammenhängende Boxen mit zwei Linien, zu offenen Linien
-    private int selectedLine;
+    private int selectedLine = 0;
 
     public ComputerLogic(){
         
     }
 
-    
     /**
      * Sortiert Boxen nach anzahl Linien in ArrayLists
      */
@@ -79,7 +78,6 @@ public class ComputerLogic implements IPlayer {
     public int getTurn() {
         int result = selectedLine;
         selectedLine = -1;
-        
         return result;
     }
     
