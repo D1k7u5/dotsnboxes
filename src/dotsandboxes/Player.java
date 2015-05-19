@@ -44,5 +44,9 @@ public class Player {
     void reset() {
         ownBoxes.removeAll(ownBoxes);
     }
+
+    void addVictory() {
+        this.victories++;
+    }
     
 }
