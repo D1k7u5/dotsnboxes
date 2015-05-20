@@ -34,6 +34,9 @@ public class GameController implements IBoxObserver, Runnable{
         } 
     }
     
+    public Player getPlayer(int index){
+        return playerModels[index];
+    }
     
     @Override
     public void boxIsFull(int id) {
