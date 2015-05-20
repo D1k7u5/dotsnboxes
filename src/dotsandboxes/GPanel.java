@@ -153,7 +153,23 @@ public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCal
     public int getCols() {
         return col;
     }
-
+    
+    public int getNrOfBoxes(int playerIndex){
+        try{
+        return gameController.getPlayer(playerIndex).getBoxes().size();
+        }catch(NullPointerException e){
+            return 0;
+        }
+    }
+    
+    public int getNrOfVictories(int playerIndex){
+        try{
+        return gameController.getPlayer(playerIndex).getVictories();
+        }catch(NullPointerException e){
+            return 0;
+        }
+    }
+    
     @Override
     public void mouseClicked(MouseEvent e) {
 
