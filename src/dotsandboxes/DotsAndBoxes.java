@@ -40,6 +40,7 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
     private final JLabel labelRound,labelP1r,labelP2r,labelGamesWon,labelP1g,labelP2g;
     private final JTextField fieldRow,fieldCol;
     private final JRadioButton net,loc,com;
+    private JLabel lblP1BoxesCnt,lblP2BoxesCnt,lblP1GameCnt,lblP2GameCnt;
     private GPanel gameView;
     private int gameType = 0;
     
@@ -72,7 +73,7 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
         dummyPanel4 = new JPanel();
         //stats Panel
         statsPanel = new JPanel();
-        statsPanel.setLayout(new BoxLayout(statsPanel,BoxLayout.Y_AXIS));
+        statsPanel.setLayout(new BoxLayout(statsPanel,BoxLayout.PAGE_AXIS));
         JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayout(3,2));
         //panel1.setPreferredSize(new Dimension(100,50));
@@ -80,20 +81,31 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
         panel1.setBorder(loweredetched);
         labelRound = new JLabel("Round : ");
         labelP1r = new JLabel("P1 :");
+        lblP1BoxesCnt = new JLabel("0");
         labelP2r = new JLabel("P2 :");
+        lblP2BoxesCnt = new JLabel("0");
         panel1.add(labelRound);
+        panel1.add(new JLabel());
         panel1.add(labelP1r);
+        panel1.add(lblP1BoxesCnt);
         panel1.add(labelP2r);
+        panel1.add(lblP2BoxesCnt);
+        
         JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayout(3,2));
         //panel2.setPreferredSize(new Dimension(100,50));
         panel2.setBorder(loweredetched);
         labelGamesWon = new JLabel("Games Won :");
-        labelP1g = new JLabel("P2 :");
+        labelP1g = new JLabel("P1 :");
+        lblP1GameCnt = new JLabel("0");
         labelP2g = new JLabel("P2 :");
+        lblP2GameCnt = new JLabel("0");
         panel2.add(labelGamesWon);
+        panel2.add(new JPanel());
         panel2.add(labelP1g);
+        panel2.add(lblP1GameCnt);
         panel2.add(labelP2g);
+        panel2.add(lblP2GameCnt);
         btnNewGame = new JButton("New Game");
         //btnNewGame.setPreferredSize(new Dimension(100,50));
         statsPanel.add(panel1);
@@ -158,7 +170,15 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
     public void run() {
         while(true){
             this.repaint();
-            //System.out.println("repaint()");
+            if(Integer.parseInt(this.lblP1BoxesCnt.getText()) != this.gameView.getNrOfBoxes(0)){
+                this.lblP1BoxesCnt.setText(Integer.toString(this.gameView.getNrOfBoxes(0)));
+            }else if(Integer.parseInt(this.lblP2BoxesCnt.getText()) != this.gameView.getNrOfBoxes(1)){
+                this.lblP2BoxesCnt.setText(Integer.toString(this.gameView.getNrOfBoxes(1)));
+            }else if(Integer.parseInt(this.lblP1GameCnt.getText()) != this.gameView.getNrOfVictories(0)){
+                this.lblP1GameCnt.setText(Integer.toString(this.gameView.getNrOfVictories(0)));
+            }else if(Integer.parseInt(this.lblP2GameCnt.getText()) != this.gameView.getNrOfVictories(1)){
+                this.lblP2GameCnt.setText(Integer.toString(this.gameView.getNrOfVictories(1)));
+            }
             try{
                 Thread.sleep(20);
             }
@@ -187,10 +207,11 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
             gameType = 1;
         }else if(e.getSource() == this.com){
             gameType = 2;
+        }else if(e.getSource() == this.btnNewGame){
+            //go back to menu view
         }
     }
     public static void main(String[] args) {
-        // TODO code application logic here
         DotsAndBoxes dab = new DotsAndBoxes();
     }
 }
