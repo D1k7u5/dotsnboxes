@@ -21,13 +21,30 @@ public class GameController implements IBoxObserver, Runnable{
     private IPlayer players[] = new IPlayer[2];
     private Player playerModels[] = new Player[2];
     private int playerIndex;
+    private ComputerLogic cpuPlayer;
     
-    public GameController(IPlayer p1, IPlayer p2, ArrayList boxes) {
+    public GameController(IPlayer p1, IPlayer p2, ArrayList boxes, int type) {
        
-        players[0] = p1;
-        players[1] = p2;
-        playerModels[0] = new Player(Color.BLUE);
-        playerModels[1] = new Player(Color.RED);
+                switch (type) {
+            case 0: //local game
+                players[0] = p1;
+                players[1] = p2;
+                playerModels[0] = new Player(Color.BLUE);
+                playerModels[1] = new Player(Color.RED);
+                break;
+            case 1: //network game
+                break;
+            case 2: //computer game
+                cpuPlayer = new ComputerLogic(Color.GREEN);
+                players[0] = p1;
+                players[1] = cpuPlayer;
+                playerModels[0] = new Player(Color.BLUE);
+                playerModels[1] = cpuPlayer;
+
+                break;
+
+        }
+
         boxList = boxes;
         for(int i = 0; i < boxList.size(); i++){
             boxList.get(i).setObserver(this);
