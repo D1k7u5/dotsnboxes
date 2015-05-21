@@ -22,6 +22,7 @@ public class GameController implements IBoxObserver, Runnable{
     private Player playerModels[] = new Player[2];
     private int playerIndex;
     private ComputerLogic cpuPlayer;
+    private boolean additionalTurn = false;
     
     public GameController(IPlayer p1, IPlayer p2, ArrayList boxes, int type, int rows, int columns) {
        
@@ -57,6 +58,7 @@ public class GameController implements IBoxObserver, Runnable{
     
     @Override
     public void boxIsFull(int id) {
+        additionalTurn = true;
         playerModels[playerIndex].addBox(id);
     }
     
@@ -79,7 +81,10 @@ public class GameController implements IBoxObserver, Runnable{
                 for (int i = 0;i < boxList.size(); i++){
                     boxList.get(i).setLine(line, playerModels[playerIndex].getColor());
                 }
-                changePlayer();
+                if(!additionalTurn){
+                    changePlayer();
+                }
+                additionalTurn = false;
             }
             try {
                 sleep(80);
