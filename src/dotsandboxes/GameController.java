@@ -91,7 +91,7 @@ public class GameController implements IBoxObserver, Runnable{
 
     private void checkForAWinner() {
         if ((boxList.size() / 2) < (playerModels[playerIndex].getBoxes().size())){
-            System.out.println("Player "+playerIndex+1+" wins!!");
+            System.out.println("Player "+(playerIndex+1)+" wins!!");
             playerModels[playerIndex].addVictory();
             resetGame();
         }
