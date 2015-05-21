@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author davidheer
  */
-public class ComputerLogic extends Player implements IPlayer {
+public class AI extends Player implements IPlayer {
     
     private ArrayList<Box> box0Line = new ArrayList<>();
     private ArrayList<Box> box1Line = new ArrayList<>();
@@ -21,13 +21,15 @@ public class ComputerLogic extends Player implements IPlayer {
     private ArrayList<ArrayList> twoLineTube = new ArrayList<>(); //Zusammenhängende Boxen mit zwei Linien, zu offenen Linien
     private ArrayList<Box> boxList;
     private int selectedLine = 0;
-    private int boxRows;
-    private int boxCols;
+    private final int row;
+    private final int col;
     
 
-    public ComputerLogic(Color color, ArrayList<Box> boxlist){
+    public AI(Color color, ArrayList<Box> boxlist, int row, int col){
         super(color);
         this.boxList = boxlist;
+        this.row = row;
+        this.col = col;
     }
 
     /**
@@ -85,6 +87,14 @@ public class ComputerLogic extends Player implements IPlayer {
         int result = selectedLine;
         selectedLine = -1;
         return result;
+    }
+    
+    
+    private void setTurn(){
+        boolean impossibleBox = true;
+        while(impossibleBox){
+            int chooseBox = (int) Math.random()*(row*col+1);
+        }
     }
     
 }
