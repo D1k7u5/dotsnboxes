@@ -32,7 +32,7 @@ public class Box {
         lineE = e;
         lineS = s;
         lineW = w;
-        sideLength = 30;
+        sideLength = 60;
         id = ID;
     }
     
