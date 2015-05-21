@@ -56,6 +56,7 @@ public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCal
         super.paintComponent(g);
         g2d.setColor(Color.white);
         g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
+        this.drawBoxes(g2d);
         this.drawLines(g2d);
         this.drawDotGrid(g2d);
     }
@@ -111,6 +112,32 @@ public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCal
             x = 45;
         }
     }
+    
+    private void drawBoxes(Graphics2D g){
+        Player p1 = this.gameController.getPlayer(0);
+        Player p2 = this.gameController.getPlayer(1);
+        int x = 74;
+        int y = 72;
+        int r = 0;
+        int c = 0;
+        int index = 1;
+        int sl = 71;
+        for(int i=1 ; i<=col ; i++){
+                for(int n=1 ; n<=row ; n++){
+                    if(p1.getBoxes().contains(index)){
+                        g.setColor(p1.getColor());
+                        g.fillRect(x+104*c, y+104*r, sl, sl);
+                    }else if(p2.getBoxes().contains(index)){
+                        g.setColor(p2.getColor());
+                        g.fillRect(x+104*c, y+104*r, sl, sl);
+                    }
+                    index++;
+                    c++;
+                }
+                c=0;
+                r++; 
+        }
+    }
 
     public void setDimensions(int rows, int columns) {
         row = rows;
@@ -147,7 +174,7 @@ public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCal
     
     public int getNrOfBoxes(int playerIndex){
         try{
-        return gameController.getPlayer(playerIndex).getBoxes().size();
+            return gameController.getPlayer(playerIndex).getBoxes().size();
         }catch(NullPointerException e){
             return 0;
         }
