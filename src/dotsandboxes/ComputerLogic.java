@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author davidheer
  */
-public class ComputerLogic implements IPlayer {
+public class ComputerLogic extends Player implements IPlayer {
     
     ArrayList<Box> box0Line = new ArrayList<>();
     ArrayList<Box> box1Line = new ArrayList<>();
