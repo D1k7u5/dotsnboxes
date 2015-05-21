@@ -11,10 +11,12 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -35,7 +37,7 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
      */
     private final JPanel menuPanel,dummyPanel1,dummyPanel2,dummyPanel3,dummyPanel4;
     private final JPanel statsPanel;
-    private final JButton start,btnNewGame;
+    private final JButton start,btnNewGame,btnLoadGame;
     private final JLabel labelRow,labelCol,labelLoc,labelNet,labelCom;
     private final JLabel labelRound,labelP1r,labelP2r,labelGamesWon,labelP1g,labelP2g;
     private final JTextField fieldRow,fieldCol;
@@ -53,6 +55,7 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
         //Menu
         menuPanel = new JPanel();
         start = new JButton("Start");
+        btnLoadGame=new JButton("Load Game");
         labelCol = new JLabel("Columns");
         labelRow = new JLabel("Rows");
         fieldRow = new JTextField("3");
@@ -63,7 +66,9 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
         loc = new JRadioButton();
         loc.setSelected(true);
         net = new JRadioButton();
+        net.setEnabled(false);
         com = new JRadioButton();
+        com.setEnabled(false);
         //Game view panel
         gameView = new GPanel();
         //dummy panel for layout
@@ -113,6 +118,8 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
         statsPanel.add(btnNewGame);
         
         start.addActionListener(this);
+        btnLoadGame.addActionListener(this);
+        btnNewGame.addActionListener(this);
         //start menu
         menuPanel.setLayout(new GridLayout(6,2));
         menuPanel.add(labelRow);
@@ -125,6 +132,7 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
         menuPanel.add(labelNet);
         menuPanel.add(com);
         menuPanel.add(labelCom);
+        menuPanel.add(btnLoadGame);
         menuPanel.add(start);
         menuPanel.setSize(500, 300);
         
@@ -194,8 +202,7 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
             try{
                 if(Integer.parseInt(this.fieldRow.getText())>6 || Integer.parseInt(this.fieldCol.getText())>8){
                     throw new NumberFormatException("enter columns below 9 and rows below 7");
-                }
-                
+                }                
                 this.setGameView(Integer.parseInt(this.fieldRow.getText()),Integer.parseInt(this.fieldCol.getText()));
             }
             catch(NumberFormatException nfe){
@@ -209,6 +216,12 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
             gameType = 2;
         }else if(e.getSource() == this.btnNewGame){
             //go back to menu view
+        }else if(e.getSource() == this.btnLoadGame){
+            JFileChooser fc = new JFileChooser();
+            int result = fc.showOpenDialog(this);
+            File file = fc.getSelectedFile();
+            
+            //simulate gameplay with file
         }
     }
     public static void main(String[] args) {
