@@ -15,7 +15,9 @@ public class LineDetection {
     private int border;
     private int lineWidth;
     private int lineLength;
-    private int numberOfBoxes;
+//    private int numberOfBoxes;
+    private int numberOfColumns;
+    private int numberOfRows;
     
     
     public LineDetection() {
@@ -23,15 +25,19 @@ public class LineDetection {
         border = 40;
         lineWidth = 24;
         lineLength = 80;
-        numberOfBoxes = 4;
+        numberOfColumns = 4;    // Anzahl Kolonnen in X richtung
+        numberOfRows = 4;       // Anzahl Reihen in Y Richtung
+    //    numberOfBoxes = 4;
+        
     }
     
-    public LineDetection(int border, int lineWidth, int lineLength, int numberOfBoxesPerLine) {
+    public LineDetection(int border, int lineWidth, int lineLength, int numberOfColumns, int numberOfRows) {
     
         this.border = border;
         this.lineWidth = lineWidth;
         this.lineLength = lineLength;
-        this.numberOfBoxes = numberOfBoxesPerLine;
+        this.numberOfColumns = numberOfColumns;
+        this.numberOfRows = numberOfRows;
     }
     
     
@@ -45,7 +51,7 @@ public class LineDetection {
         int deltaXItr = lineLength / 2 + lineWidth / 2;
         int deltaYItr = deltaXItr;
         
-        if(xCoordinate > -(lineWidth/2) && xCoordinate < (numberOfBoxes*2 * deltaXItr + lineWidth/2) && yCoordinate > -(lineWidth/2) && xCoordinate < (numberOfBoxes*2 * deltaXItr + lineWidth/2)) 
+        if(xCoordinate > -(lineWidth/2) && xCoordinate < (numberOfColumns*2 * deltaXItr + lineWidth/2) && yCoordinate > -(lineWidth/2) && xCoordinate < (numberOfColumns*2 * deltaXItr + lineWidth/2) && yCoordinate < (numberOfRows*2 * deltaYItr + lineWidth/2)) 
         {
         
             // detect XOffset
@@ -87,12 +93,12 @@ public class LineDetection {
                 yOffset += tempOffset;
 
                 if(tempRange == lineWidth /2) {
-                    tempOffset = numberOfBoxes;
+                    tempOffset = numberOfColumns;//numberOfBoxes;
                     tempRange = lineLength/2;
                     isYLineHorizontal = true;
                 }
                 else{
-                    tempOffset = numberOfBoxes + 1;
+                    tempOffset = numberOfColumns + 1;//numberOfBoxes + 1;
                     tempRange = lineWidth /2;
                     isYLineHorizontal = false;
                 }

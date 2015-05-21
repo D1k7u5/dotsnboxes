@@ -35,7 +35,7 @@ public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCal
         row = rows;
         col = columns;
 
-        row = columns;
+        //row = columns;
 
         setPreferredSize(new Dimension((104 * (col + 1)) + 10, (104 * (row + 1)) + 10));
         lineList = new ArrayList<>();
@@ -44,7 +44,7 @@ public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCal
 
         addMouseListener(this);
         selectedLine = -1;
-        lineDetector = new LineDetection(40 + 16, 24, 80, columns);
+        lineDetector = new LineDetection(40 + 16, 24, 80, columns, row);
         
         switch (type){
             case 0: //local game
@@ -94,7 +94,7 @@ public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCal
         //horizontal lines
         for (r = 0; r < row +1 ; r++) {
             for (c = 0; c < col; c++) {
-                selLine = (r * ( (row *2) +1 ) + c);
+                selLine = (r * ( (col *2) +1 ) + c);
                 g.setColor(lineList.get(selLine).getColor());
                 g.fillRect(x, y, lineList.get(selLine).getWidth(), lineList.get(selLine).getHeight());
                 g.setColor(Color.black);
