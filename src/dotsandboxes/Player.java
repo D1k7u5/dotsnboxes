@@ -16,6 +16,14 @@ public class Player {
     private Color color;
     private final ArrayList<Integer> ownBoxes = new ArrayList<>();
     private int victories = 0;
+    
+    public Player(Color color) {
+        this.color = color;
+    }
+    
+    public Player(){
+        this.color = Color.GREEN;
+    }
 
     public int getVictories() {
         return victories;
@@ -27,10 +35,6 @@ public class Player {
 
     public Color getColor() {
         return color;
-    }
-
-    public Player(Color color) {
-        this.color = color;
     }
     
     public void addBox(int id){

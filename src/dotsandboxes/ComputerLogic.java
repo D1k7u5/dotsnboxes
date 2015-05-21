@@ -5,13 +5,14 @@
  */
 package dotsandboxes;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 /**
  *
  * @author davidheer
  */
-public class ComputerLogic implements IPlayer {
+public class ComputerLogic extends Player implements IPlayer {
     
     ArrayList<Box> box0Line = new ArrayList<>();
     ArrayList<Box> box1Line = new ArrayList<>();
@@ -20,8 +21,8 @@ public class ComputerLogic implements IPlayer {
     ArrayList<ArrayList> twoLineTube = new ArrayList<>(); //Zusammenhängende Boxen mit zwei Linien, zu offenen Linien
     private int selectedLine = 0;
 
-    public ComputerLogic(){
-        
+    public ComputerLogic(Color color){
+        super(color);
     }
 
     /**
