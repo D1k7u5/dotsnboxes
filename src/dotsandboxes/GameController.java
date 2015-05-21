@@ -23,7 +23,7 @@ public class GameController implements IBoxObserver, Runnable{
     private int playerIndex;
     private ComputerLogic cpuPlayer;
     
-    public GameController(IPlayer p1, IPlayer p2, ArrayList boxes, int type) {
+    public GameController(IPlayer p1, IPlayer p2, ArrayList boxes, int type, int rows, int columns) {
        
                 switch (type) {
             case 0: //local game
@@ -35,7 +35,7 @@ public class GameController implements IBoxObserver, Runnable{
             case 1: //network game
                 break;
             case 2: //computer game
-                cpuPlayer = new ComputerLogic(Color.GREEN);
+                cpuPlayer = new ComputerLogic(Color.GREEN, boxes);
                 players[0] = p1;
                 players[1] = cpuPlayer;
                 playerModels[0] = new Player(Color.BLUE);

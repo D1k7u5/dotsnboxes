@@ -46,7 +46,7 @@ public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCal
         selectedLine = -1;
         lineDetector = new LineDetection(40 + 16, 24, 80, columns, row);
         
-        gameController = new GameController(this, this, boxList,type);
+        gameController = new GameController(this, this, boxList,type, row, col);
         new Thread(gameController).start();
     }
 

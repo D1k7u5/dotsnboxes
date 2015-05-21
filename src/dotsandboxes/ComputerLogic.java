@@ -14,22 +14,27 @@ import java.util.ArrayList;
  */
 public class ComputerLogic extends Player implements IPlayer {
     
-    ArrayList<Box> box0Line = new ArrayList<>();
-    ArrayList<Box> box1Line = new ArrayList<>();
-    ArrayList<Box> box2Line = new ArrayList<>();
-    ArrayList<Box> box3Line = new ArrayList<>();
-    ArrayList<ArrayList> twoLineTube = new ArrayList<>(); //Zusammenhängende Boxen mit zwei Linien, zu offenen Linien
+    private ArrayList<Box> box0Line = new ArrayList<>();
+    private ArrayList<Box> box1Line = new ArrayList<>();
+    private ArrayList<Box> box2Line = new ArrayList<>();
+    private ArrayList<Box> box3Line = new ArrayList<>();
+    private ArrayList<ArrayList> twoLineTube = new ArrayList<>(); //Zusammenhängende Boxen mit zwei Linien, zu offenen Linien
+    private ArrayList<Box> boxList;
     private int selectedLine = 0;
+    private int boxRows;
+    private int boxCols;
+    
 
-    public ComputerLogic(Color color){
+    public ComputerLogic(Color color, ArrayList<Box> boxlist){
         super(color);
+        this.boxList = boxlist;
     }
 
     /**
      * Sortiert Boxen nach anzahl Linien in ArrayLists
      */
     private void sortBoxes(){
-        for(Box box : box0Line){
+        for(Box box : boxList){
             int setedLines;
             setedLines = box.getNumberOfSetedLines();
             
