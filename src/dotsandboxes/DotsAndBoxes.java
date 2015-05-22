@@ -37,14 +37,15 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
      */
     private final JPanel menuPanel,dummyPanel1,dummyPanel2,dummyPanel3,dummyPanel4;
     private final JPanel statsPanel;
-    private final JButton start,btnNewGame,btnLoadGame;
+    private final JButton start,btnNewGame,btnLoadGame,btnSaveGame,btnStartNet;
     private final JLabel labelRow,labelCol,labelLoc,labelNet,labelCom;
     private final JLabel labelRound,labelP1r,labelP2r,labelGamesWon,labelP1g,labelP2g;
     private final JTextField fieldRow,fieldCol;
-    private final JRadioButton net,loc,com;
+    private final JRadioButton net,loc,com,rbtnServer,rbtnClient;
     private JLabel lblP1BoxesCnt,lblP2BoxesCnt,lblP1GameCnt,lblP2GameCnt;
     private GPanel gameView;
     private int gameType = 0;
+    private JPanel netConnectionView;
     
     private ArrayList<Line> lineList;
     
@@ -56,6 +57,7 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
         menuPanel = new JPanel();
         start = new JButton("Start");
         btnLoadGame=new JButton("Load Game");
+        btnSaveGame = new JButton("Save Game");
         labelCol = new JLabel("Columns");
         labelRow = new JLabel("Rows");
         fieldRow = new JTextField("3");
@@ -74,6 +76,11 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
         dummyPanel2 = new JPanel();
         dummyPanel3 = new JPanel();
         dummyPanel4 = new JPanel();
+//View for network connection
+        netConnectionView = new JPanel();
+        rbtnClient = new JRadioButton();
+        rbtnServer = new JRadioButton();
+        btnStartNet = new JButton("Start");
         //stats Panel
         statsPanel = new JPanel();
         statsPanel.setLayout(new BoxLayout(statsPanel,BoxLayout.PAGE_AXIS));
@@ -110,18 +117,23 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
         panel2.add(labelP2g);
         panel2.add(lblP2GameCnt);
         btnNewGame = new JButton("New Game");
-        //btnNewGame.setPreferredSize(new Dimension(100,50));
+//btnNewGame.setPreferredSize(new Dimension(100,50));
         statsPanel.add(panel1);
         statsPanel.add(panel2);
         statsPanel.add(btnNewGame);
-        
+        statsPanel.add(btnSaveGame);
+//listener Registration
         start.addActionListener(this);
         btnLoadGame.addActionListener(this);
+        btnSaveGame.addActionListener(this);
         btnNewGame.addActionListener(this);
         loc.addActionListener(this);
         com.addActionListener(this);
         net.addActionListener(this);
-        //start menu
+        rbtnServer.addActionListener(this);
+        rbtnClient.addActionListener(this);
+        btnStartNet.addActionListener(this);
+//start menu
         menuPanel.setLayout(new GridLayout(6,2));
         menuPanel.add(labelRow);
         menuPanel.add(fieldRow);
@@ -148,16 +160,12 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
     public void setGameView(int rows, int columns){
         //Game view panel
         gameView = new GPanel(rows,columns,this.gameType);   
-        this.remove(menuPanel);
-        this.remove(dummyPanel1);
-        this.remove(dummyPanel2);
-        this.remove(dummyPanel3);
-        this.remove(dummyPanel4);
-        this.setLayout(new BorderLayout());
-        this.add(dummyPanel1,BorderLayout.NORTH);
+        this.removeMenuView();
+        //this.setLayout(new BorderLayout());
+        //this.add(dummyPanel1,BorderLayout.NORTH);
         this.add(statsPanel,BorderLayout.WEST);
-        this.add(dummyPanel3,BorderLayout.SOUTH);
-        this.add(dummyPanel4,BorderLayout.EAST);
+        //this.add(dummyPanel3,BorderLayout.SOUTH);
+        //this.add(dummyPanel4,BorderLayout.EAST);
         this.add(gameView,BorderLayout.CENTER);
         repaint();
         this.pack();
@@ -170,6 +178,49 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
         this.add(dummyPanel4,BorderLayout.SOUTH);
         this.add(menuPanel,BorderLayout.CENTER);
         this.pack();    
+    }
+    public void removeMenuView(){
+        this.remove(menuPanel);
+        //this.remove(dummyPanel1);
+        //this.remove(dummyPanel2);
+        this.remove(dummyPanel3);
+        //this.remove(dummyPanel4);
+    }
+    private void setNetworkConnectionView(){
+        this.removeMenuView();
+        this.netConnectionView.setLayout(new GridLayout(4,2));
+        this.netConnectionView.add(new JLabel("Start Network Connection"));
+        this.netConnectionView.add(new JPanel());
+        this.netConnectionView.add(rbtnServer);
+        this.netConnectionView.add(new JLabel("as Server"));
+        this.netConnectionView.add(rbtnClient);
+        this.netConnectionView.add(new JLabel("as Client"));
+        this.netConnectionView.add(new JPanel());
+        this.netConnectionView.add(btnStartNet);
+        this.add(this.dummyPanel3,BorderLayout.WEST);
+        this.add(netConnectionView,BorderLayout.CENTER);
+        this.pack();
+    }
+    private void removeNetworkConnectionView(){
+        this.remove(netConnectionView);
+    }
+    private void setNetworkServerView(){
+        removeNetworkConnectionView();
+        this.netConnectionView.removeAll();
+        this.netConnectionView.setLayout(new GridLayout(2,1));
+        this.netConnectionView.add(new JLabel("Waiting for Connection"));
+        this.netConnectionView.add(new JLabel("........"));
+        this.add(netConnectionView,BorderLayout.CENTER);
+        this.pack();
+    }
+    private void setNetworkClientView(){
+        removeNetworkConnectionView();
+        this.netConnectionView.removeAll();
+        this.netConnectionView.setLayout(new GridLayout(2,1));
+        this.netConnectionView.add(new JLabel("Looking for Dots&Boxes Servers"));
+        this.netConnectionView.add(new JLabel("........"));
+        this.add(netConnectionView,BorderLayout.CENTER);
+        this.pack();
     }
     public JPanel getGameView() {
         return gameView;
@@ -201,10 +252,18 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==this.start){
             try{
-                if(Integer.parseInt(this.fieldRow.getText())>6 || Integer.parseInt(this.fieldCol.getText())>8){
-                    throw new NumberFormatException("enter columns below 9 and rows below 7");
-                }                
-                this.setGameView(Integer.parseInt(this.fieldRow.getText()),Integer.parseInt(this.fieldCol.getText()));
+                switch(this.gameType){
+                    case 0:
+                        if(Integer.parseInt(this.fieldRow.getText())>6 || Integer.parseInt(this.fieldCol.getText())>8){
+                            throw new NumberFormatException("enter columns below 9 and rows below 7");
+                        }
+                        this.setGameView(Integer.parseInt(this.fieldRow.getText()),Integer.parseInt(this.fieldCol.getText()));
+                        break;
+                    case 1:
+                        this.setNetworkConnectionView();
+                        break;
+                }
+                                
             }
             catch(NumberFormatException nfe){
                 JOptionPane.showMessageDialog(null, nfe.getMessage());
@@ -221,6 +280,18 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
             gameType = 2;
             loc.setSelected(false);
             net.setSelected(false);
+        }else if(e.getSource() == this.rbtnClient){
+            rbtnServer.setSelected(false);
+        }else if(e.getSource() == this.rbtnServer){
+            rbtnClient.setSelected(false);
+        }else if(e.getSource() == this.btnStartNet){
+            if(rbtnClient.isSelected()){
+                //start net game as client
+                this.setNetworkClientView();
+            }else if(rbtnServer.isSelected()){
+                //start net game as server
+                this.setNetworkServerView();
+            }
         }else if(e.getSource() == this.btnNewGame){
             //go back to menu view
         }else if(e.getSource() == this.btnLoadGame){
@@ -228,6 +299,16 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
             int result = fc.showOpenDialog(this);
             File file = fc.getSelectedFile();
             
+            //simulate gameplay with file
+        }else if(e.getSource() == this.btnSaveGame){
+            JFileChooser j = new JFileChooser();
+            j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            if (j.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) { 
+                System.out.println("getCurrentDirectory(): " +  j.getCurrentDirectory());
+                System.out.println("getSelectedFile() : " +  j.getSelectedFile());
+            }else {
+                System.out.println("No Selection ");
+            }
             //simulate gameplay with file
         }
     }
