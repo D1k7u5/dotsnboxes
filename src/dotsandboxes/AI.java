@@ -51,22 +51,7 @@ public class AI extends Player implements IPlayer {
     private void check3LineBoxes(){
         
         for(Box box : boxList){
-            int counter =4;
-            if(box.getLineN().getColor() == Color.LIGHT_GRAY){
-                counter--;
-            }
-            if(box.getLineE().getColor() == Color.LIGHT_GRAY){
-                counter--;
-            }
-            if(box.getLineS().getColor() == Color.LIGHT_GRAY){
-                counter--;
-            }
-            if(box.getLineW().getColor() == Color.LIGHT_GRAY){
-                counter--;
-            }
-            if(counter == 3){
-                box3Line.add(box);
-            }
+            
         }
         
     }
@@ -135,13 +120,13 @@ public class AI extends Player implements IPlayer {
     @Override
     public int getTurn() {
         this.sortBoxes();
-        this.setTurn();
+        this.setRandomTurn();
         int result = selectedLine;
         return result;
     }
     
     
-    private void setTurn(){
+    private void setRandomTurn(){
         boolean impossibleBox = true;
         while(impossibleBox){
             int chooseBox = (int) Math.random()*(row*col+1);
@@ -166,6 +151,7 @@ public class AI extends Player implements IPlayer {
                 }
             }
         }
+        System.out.println("Zufällig ausgewählte Linie: " + selectedLine);
     }
     
 }
