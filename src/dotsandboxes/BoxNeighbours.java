@@ -15,13 +15,25 @@ public class BoxNeighbours {
     
     private final int row;
     private final int col;
-    private ArrayList<Integer> corner;
-    private ArrayList<Integer> edge;
-    private ArrayList<Integer> infield;
+    private static ArrayList<Integer> corner;
+    private static ArrayList<Integer> edge;
+    private static ArrayList<Integer> infield;
     
     public BoxNeighbours(int row, int col){
         this.row = row;
         this.col = col;
+    }
+    
+    public static ArrayList getCorner(){
+        return corner;
+    }
+    
+    public static ArrayList getEdge(){
+        return edge;
+    }
+    
+    public static ArrayList getInnfield(){
+        return infield;
     }
     
     private void setCorner(){

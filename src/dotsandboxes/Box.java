@@ -107,6 +107,7 @@ public class Box {
     
     /**
      * Returns the Number of seted lines
+     * @return 
     */
     public int getNumberOfSetedLines(){
         int counter = 0;

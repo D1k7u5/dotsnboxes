@@ -7,6 +7,7 @@ package dotsandboxes;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -49,20 +50,69 @@ public class AI extends Player implements IPlayer {
     
     private void check3LineBoxes(){
         
+        for(Box box : boxList){
+            int counter =4;
+            if(box.getLineN().getColor() == Color.LIGHT_GRAY){
+                counter--;
+            }
+            if(box.getLineE().getColor() == Color.LIGHT_GRAY){
+                counter--;
+            }
+            if(box.getLineS().getColor() == Color.LIGHT_GRAY){
+                counter--;
+            }
+            if(box.getLineW().getColor() == Color.LIGHT_GRAY){
+                counter--;
+            }
+            if(counter == 3){
+                box3Line.add(box);
+            }
+        }
+        
     }
     
     private void check0Lines(){
+        /*
+        Box bestBox;
+        Iterator<Box> iteratorC = BoxNeighbours.getCorner().iterator();
+        while(iteratorC.hasNext()){
+            if(iteratorC.next().equals(row))
+            bestBox = iteratorC.next();
+            break;
+        }
         
+        while(iteratorC.hasNext()){
+            for(Box box0 : box0Line){
+                if(box0.equals(iteratorC.next())){
+                    bestBox = box0;
+                }
+            }
+        }
+        
+        Iterator<Box> iteratorE = BoxNeighbours.getEdge().iterator();
+        while(iteratorE.hasNext()){
+            bestBox = iteratorE.next();
+            break;
+        }
+        Iterator<Box> iteratorI = BoxNeighbours.getCorner().iterator();
+        while(iteratorI.hasNext()){
+            bestBox = iteratorI.next();
+            break;
+        }
+        
+        
+     */   
     }
     
     private void check1Line(){
-        
+        Box bestBox;
     }
     
     /**
      * Prüfe Boxen mit zwei Linien und erstelle
      */
     private void check2Line(){
+        Box bestBox;
         /*
         
         for(Box box : box2Line){
@@ -84,8 +134,9 @@ public class AI extends Player implements IPlayer {
 
     @Override
     public int getTurn() {
+        this.sortBoxes();
+        this.setTurn();
         int result = selectedLine;
-        selectedLine = -1;
         return result;
     }
     
@@ -94,6 +145,26 @@ public class AI extends Player implements IPlayer {
         boolean impossibleBox = true;
         while(impossibleBox){
             int chooseBox = (int) Math.random()*(row*col+1);
+            for(Box box : boxList){
+                if(box.getId() == chooseBox){
+                    if(box.getLineN().getColor() == Color.LIGHT_GRAY){
+                        selectedLine = box.getLineN().getId();
+                        impossibleBox = false;
+                    }
+                    if(box.getLineE().getColor() == Color.LIGHT_GRAY){
+                        selectedLine = box.getLineE().getId();
+                        impossibleBox = false;
+                    }
+                    if(box.getLineS().getColor() == Color.LIGHT_GRAY){
+                        selectedLine = box.getLineS().getId();
+                        impossibleBox = false;
+                    }
+                    if(box.getLineW().getColor() == Color.LIGHT_GRAY){
+                        selectedLine = box.getLineW().getId();
+                        impossibleBox = false;
+                    }
+                }
+            }
         }
     }
     
