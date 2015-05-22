@@ -52,6 +52,10 @@ public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCal
         gameController.addWinnerObserver(this);
         new Thread(gameController).start();
     }
+    
+    public void setDifficulty(int diff){
+        this.gameController.setDifficulty(diff);
+    }
 
     @Override
     public void paintComponent(Graphics g) {

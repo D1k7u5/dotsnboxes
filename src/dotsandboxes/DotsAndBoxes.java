@@ -262,6 +262,17 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
                     case 1:
                         this.setNetworkConnectionView();
                         break;
+                    case 2:
+                        if(Integer.parseInt(this.fieldRow.getText())>6 || Integer.parseInt(this.fieldCol.getText())>8){
+                            throw new NumberFormatException("enter columns below 9 and rows below 7");
+                        }
+                        Object[] options = {"easy","not random"};
+                        int option = JOptionPane.showOptionDialog(this, "choose Difficulty of Computer Player",
+                                "Choose difficulty",JOptionPane.YES_NO_OPTION,
+                                JOptionPane.QUESTION_MESSAGE,null,options,options[1]);
+                        this.setGameView(Integer.parseInt(this.fieldRow.getText()),Integer.parseInt(this.fieldCol.getText()));
+                        gameView.setDifficulty(option);
+                        break;
                 }
                                 
             }
