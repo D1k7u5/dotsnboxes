@@ -66,7 +66,7 @@ public class StorageGame {
             
         
         printWriter = new PrintWriter(logfile);
-        printWriter.println("PID: " + PlayerID + " LID: " + LineID + " RGB: " + color.getRGB() + " " + color.getGreen() + " " + color.getBlue());
+        printWriter.println("PID: " + PlayerID + " LID: " + LineID + " RGB: " + color.getRed() + " " + color.getGreen() + " " + color.getBlue());
         printWriter.close();
         }
          catch (IOException e) {

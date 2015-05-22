@@ -1,0 +1,7 @@
+GameType: 0
+Rows: 2
+Columns: 2
+GamesWonP1: 0
+GamesWonP2: 1
+PID: 1 LID: 1 RGB: 255 0 0
+PID: 0 LID: 4 RGB: 0 0 255

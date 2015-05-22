@@ -21,8 +21,10 @@ public class GameController implements IBoxObserver, Runnable{
     private IPlayer players[] = new IPlayer[2];
     private Player playerModels[] = new Player[2];
     private int playerIndex;
-    private ComputerLogic cpuPlayer;
+    private AI cpuPlayer;
+    private boolean additionalTurn = false;
     private StorageGame gameSaver;
+    
     
     public GameController(IPlayer p1, IPlayer p2, ArrayList boxes, int type, int rows, int columns) {
        
@@ -36,7 +38,7 @@ public class GameController implements IBoxObserver, Runnable{
             case 1: //network game
                 break;
             case 2: //computer game
-                cpuPlayer = new ComputerLogic(Color.GREEN, boxes);
+                cpuPlayer = new AI(Color.GREEN, boxes, rows, columns);
                 players[0] = p1;
                 players[1] = cpuPlayer;
                 playerModels[0] = new Player(Color.BLUE);
@@ -61,6 +63,7 @@ public class GameController implements IBoxObserver, Runnable{
     
     @Override
     public void boxIsFull(int id) {
+        additionalTurn = true;
         playerModels[playerIndex].addBox(id);
     }
     
@@ -84,7 +87,10 @@ public class GameController implements IBoxObserver, Runnable{
                 for (int i = 0;i < boxList.size(); i++){
                     boxList.get(i).setLine(line, playerModels[playerIndex].getColor());
                 }
-                changePlayer();
+                if(!additionalTurn){
+                    changePlayer();
+                }
+                additionalTurn = false;
             }
             try {
                 sleep(80);
@@ -95,10 +101,14 @@ public class GameController implements IBoxObserver, Runnable{
     }
 
     private void checkForAWinner() {
+        try{
         if ((boxList.size() / 2) < (playerModels[playerIndex].getBoxes().size())){
             System.out.println("Player "+(playerIndex+1)+" wins!!");
             playerModels[playerIndex].addVictory();
             resetGame();
+        }
+        }catch(Exception e){
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
