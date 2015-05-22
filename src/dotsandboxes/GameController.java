@@ -22,38 +22,63 @@ public class GameController implements IBoxObserver, Runnable{
     private Player playerModels[] = new Player[2];
     private int playerIndex;
     private AI cpuPlayer;
-    private LoadGamePlayer loadGamePlayer;
     private boolean additionalTurn = false;
     private int difficulty = 0;
-    
-    
-    public GameController(IPlayer p1, IPlayer p2, ArrayList boxes, int type, int row, int col) {
+    private IWinnerCallback observer;
+    private int rows;
+    private int columns;
+    private IPlayer localPlayer;    
+    private LoadGamePlayer loadGamePlayer;
+    private StorageGame gameSaver;
 
-                switch (type) {
+    
+    
+    
+    public GameController(IPlayer p1, IPlayer p2, ArrayList boxes, int type, int rows, int columns) {
+        
+        localPlayer = p1;
+        this.rows = rows;
+        this.columns = columns;
+        
+        setGameType(type);
+        
+        boxList = boxes;
+        for(int i = 0; i < boxList.size(); i++){
+            boxList.get(i).setObserver(this);
+        } 
+        
+        gameSaver = new StorageGame(type, rows, columns);
+        
+    }
+    
+    
+    public void setGameType(int gameType) {
+        switch (gameType) {
             case 0: //local game
-                players[0] = p1;
-                players[1] = p2;
+                players[0] = localPlayer;
+                players[1] = localPlayer;
                 playerModels[0] = new Player(Color.BLUE);
                 playerModels[1] = new Player(Color.RED);
                 break;
             case 1: //network game
                 break;
             case 2: //computer game
-                cpuPlayer = new AI(Color.GREEN, boxes, row, col);
-                players[0] = p1;
+                cpuPlayer = new AI(Color.RED, boxList, rows, columns);
+                players[0] = localPlayer;
                 players[1] = cpuPlayer;
                 playerModels[0] = new Player(Color.BLUE);
                 playerModels[1] = cpuPlayer;
-
                 break;
-
+            case 3:
+                loadGamePlayer = new LoadGamePlayer();
+                players[0] = loadGamePlayer;
+                players[1] = loadGamePlayer;
+                playerModels[0] = new Player(Color.BLUE);
+                playerModels[1] = new Player(Color.RED);
+                break;
         }
-
-        boxList = boxes;
-        for(int i = 0; i < boxList.size(); i++){
-            boxList.get(i).setObserver(this);
-        } 
     }
+    
     
     public Player getPlayer(int index){
         return playerModels[index];
@@ -80,7 +105,11 @@ public class GameController implements IBoxObserver, Runnable{
         while(true){
             checkForAWinner();
             int line = players[playerIndex].getTurn();
-            if(line != -1){
+            if(line == -2) {
+                this.setGameType(loadGamePlayer.getGameType());
+            }
+            else if(line != -1){
+                gameSaver.saveTurn(playerIndex, line, playerModels[playerIndex].getColor());
                 for (int i = 0;i < boxList.size(); i++){
                     boxList.get(i).setLine(line, playerModels[playerIndex].getColor());
                 }
@@ -102,6 +131,12 @@ public class GameController implements IBoxObserver, Runnable{
         if ((boxList.size() / 2) < (playerModels[playerIndex].getBoxes().size())){
             System.out.println("Player "+(playerIndex+1)+" wins!!");
             playerModels[playerIndex].addVictory();
+            observer.winnerIs("Player " + (playerIndex+1) + " wins!!");
+            resetGame();
+        }else if ((playerModels[0].getBoxes().size() == playerModels[1].getBoxes().size()) 
+                && (playerModels[0].getBoxes().size() == (boxList.size()/2))){
+            System.out.println("No winner! DRAW!");
+            observer.winnerIs("No winner! DRAW!");
             resetGame();
         }
         }catch(Exception e){
@@ -115,10 +150,16 @@ public class GameController implements IBoxObserver, Runnable{
         }
         playerModels[0].reset();
         playerModels[1].reset();
+        
+        gameSaver.reInitFile(playerModels[0].getVictories(), playerModels[1].getVictories());
     }
     
     public void setDifficulty(int diff){
         this.difficulty = diff;
+    }
+    
+    void addWinnerObserver(GPanel aThis) {
+        observer = aThis;
     }
     
 }

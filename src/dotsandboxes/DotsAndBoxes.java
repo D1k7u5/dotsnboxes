@@ -271,7 +271,7 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
                                 "Choose difficulty",JOptionPane.YES_NO_OPTION,
                                 JOptionPane.QUESTION_MESSAGE,null,options,options[1]);
                         this.setGameView(Integer.parseInt(this.fieldRow.getText()),Integer.parseInt(this.fieldCol.getText()));
-                        gameView.setDifficulty(option);
+//                        gameView.setDifficulty(option);
                         break;
                 }
                                 
@@ -307,22 +307,25 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
             //go back to menu view
         }else if(e.getSource() == this.btnLoadGame){
             JFileChooser fc = new JFileChooser();
+            fc.setCurrentDirectory(new File(System.getProperty("user.dir") + "/ressources/"));
             int result = fc.showOpenDialog(this);
-            File file = fc.getSelectedFile();
-            LoadGamePlayer.setFileToLoad(file);
-            LoadGamePlayer loadGameSettings = new LoadGamePlayer();
-            this.gameType = 3;
-            this.setGameView(loadGameSettings.getRows(),loadGameSettings.getColumns());
             
+            if(result == JFileChooser.APPROVE_OPTION) {
+                LoadGamePlayer.setFileToLoad(fc.getSelectedFile());
+                LoadGamePlayer loadGameSettings = new LoadGamePlayer();
+                this.gameType = 3;
+                this.setGameView(loadGameSettings.getRows(),loadGameSettings.getColumns());
+            }
             
             //simulate gameplay with file
         }else if(e.getSource() == this.btnSaveGame){
-            JFileChooser j = new JFileChooser();
-            j.setFileSelectionMode(JFileChooser.SAVE_DIALOG);
-            if (j.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) { 
-                System.out.println("getCurrentDirectory(): " +  j.getCurrentDirectory());
-                System.out.println("getSelectedFile() : " +  j.getSelectedFile());
-                StorageGame.saveGame(j.getSelectedFile());
+            JFileChooser fc = new JFileChooser();
+            fc.setCurrentDirectory(new File(System.getProperty("user.dir") + "/ressources/"));
+            int result = fc.showSaveDialog(start);
+            
+            if (result == JFileChooser.APPROVE_OPTION) { 
+                System.out.println("Save actual game to: " +  fc.getSelectedFile());
+                StorageGame.saveGame(fc.getSelectedFile());
             }else {
                 System.out.println("No Selection ");
             }
