@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="dotsnboxes">
+  <ClassDiagramComponents>
+    <Class name="AI" package="dotsandboxes" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="box0Line" type="ArrayList&lt;Box&gt;" visibility="private"/>
+        <Field name="box1Line" type="ArrayList&lt;Box&gt;" visibility="private"/>
+        <Field name="box2Line" type="ArrayList&lt;Box&gt;" visibility="private"/>
+        <Field name="box3Line" type="ArrayList&lt;Box&gt;" visibility="private"/>
+        <Field name="twoLineTube" type="ArrayList&lt;ArrayList&gt;" visibility="private"/>
+        <Field name="boxList" type="ArrayList&lt;Box&gt;" visibility="private"/>
+        <Field name="selectedLine" type="int" visibility="private"/>
+        <Field name="row" type="int" visibility="private" isFinal="true"/>
+        <Field name="col" type="int" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Color" name="color"/>
+          <Argument type="ArrayList&lt;Box&gt;" name="boxlist"/>
+          <Argument type="int" name="row"/>
+          <Argument type="int" name="col"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="sortBoxes" returnType="void" visibility="private"/>
+        <Method name="check3LineBoxes" returnType="void" visibility="private"/>
+        <Method name="check0Lines" returnType="void" visibility="private"/>
+        <Method name="check1Line" returnType="void" visibility="private"/>
+        <Method name="check2Line" returnType="void" visibility="private"/>
+        <Method name="act" returnType="void" visibility="public"/>
+        <Method name="getTurn" returnType="int" visibility="public"/>
+        <Method name="setRandomTurn" returnType="void" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="Box" package="dotsandboxes" visibility="public" xPosition="352.0" yPosition="20.0">
+      <Fields>
+        <Field name="lineN" type="Line" visibility="private"/>
+        <Field name="lineE" type="Line" visibility="private"/>
+        <Field name="lineS" type="Line" visibility="private"/>
+        <Field name="lineW" type="Line" visibility="private"/>
+        <Field name="sideLength" type="int" visibility="private"/>
+        <Field name="id" type="int" visibility="private"/>
+        <Field name="observer" type="IBoxObserver" visibility="private"/>
+        <Field name="used" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="ID"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="Line" name="n"/>
+          <Argument type="Line" name="e"/>
+          <Argument type="Line" name="s"/>
+          <Argument type="Line" name="w"/>
+          <Argument type="int" name="ID"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="setLine" returnType="void" visibility="public">
+          <Argument type="int" name="lineID"/>
+          <Argument type="Color" name="color"/>
+        </Method>
+        <Method name="isBoxFull" returnType="boolean" visibility="private"/>
+        <Method name="getLineN" returnType="Line" visibility="public"/>
+        <Method name="setLineN" returnType="void" visibility="public">
+          <Argument type="Line" name="lineN"/>
+        </Method>
+        <Method name="getLineE" returnType="Line" visibility="public"/>
+        <Method name="setLineE" returnType="void" visibility="public">
+          <Argument type="Line" name="lineE"/>
+        </Method>
+        <Method name="getLineS" returnType="Line" visibility="public"/>
+        <Method name="setLineS" returnType="void" visibility="public">
+          <Argument type="Line" name="lineS"/>
+        </Method>
+        <Method name="getLineW" returnType="Line" visibility="public"/>
+        <Method name="setLineW" returnType="void" visibility="public">
+          <Argument type="Line" name="lineW"/>
+        </Method>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="getNumberOfSetedLines" returnType="int" visibility="public"/>
+        <Method name="setObserver" returnType="void" visibility="public">
+          <Argument type="IBoxObserver" name="observer"/>
+        </Method>
+        <Method name="reset" returnType="void" visibility="package"/>
+      </Methods>
+    </Class>
+    <Class name="BoxNeighbours" package="dotsandboxes" visibility="public" xPosition="620.0" yPosition="20.0">
+      <Fields>
+        <Field name="row" type="int" visibility="private" isFinal="true"/>
+        <Field name="col" type="int" visibility="private" isFinal="true"/>
+        <Field name="corner" type="ArrayList&lt;Integer&gt;" visibility="private" isStatic="true"/>
+        <Field name="edge" type="ArrayList&lt;Integer&gt;" visibility="private" isStatic="true"/>
+        <Field name="infield" type="ArrayList&lt;Integer&gt;" visibility="private" isStatic="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="row"/>
+          <Argument type="int" name="col"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getCorner" returnType="ArrayList" visibility="public" isStatic="true"/>
+        <Method name="getEdge" returnType="ArrayList" visibility="public" isStatic="true"/>
+        <Method name="getInnfield" returnType="ArrayList" visibility="public" isStatic="true"/>
+        <Method name="setCorner" returnType="void" visibility="private"/>
+        <Method name="setEdge" returnType="void" visibility="private"/>
+        <Method name="setInfield" returnType="void" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="DotsAndBoxes" package="dotsandboxes" visibility="public" xPosition="920.0" yPosition="20.0">
+      <Fields>
+        <Field name="menuPanel" type="JPanel" visibility="private" isFinal="true"/>
+        <Field name="statsPanel" type="JPanel" visibility="private" isFinal="true"/>
+        <Field name="start" type="JButton" visibility="private" isFinal="true"/>
+        <Field name="labelRow" type="JLabel" visibility="private" isFinal="true"/>
+        <Field name="labelRound" type="JLabel" visibility="private" isFinal="true"/>
+        <Field name="fieldRow" type="JTextField" visibility="private" isFinal="true"/>
+        <Field name="net" type="JRadioButton" visibility="private" isFinal="true"/>
+        <Field name="lblP1BoxesCnt" type="JLabel" visibility="private"/>
+        <Field name="gameView" type="GPanel" visibility="private"/>
+        <Field name="gameType" type="int" visibility="private"/>
+        <Field name="lineList" type="ArrayList&lt;Line&gt;" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="setGameView" returnType="void" visibility="public">
+          <Argument type="int" name="rows"/>
+          <Argument type="int" name="columns"/>
+        </Method>
+        <Method name="setMenuView" returnType="void" visibility="private"/>
+        <Method name="getGameView" returnType="JPanel" visibility="public"/>
+        <Method name="run" returnType="void" visibility="public"/>
+        <Method name="actionPerformed" returnType="void" visibility="public">
+          <Argument type="ActionEvent" name="e"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="GameController" package="dotsandboxes" visibility="public" xPosition="1220.0" yPosition="20.0">
+      <Fields>
+        <Field name="boxList" type="ArrayList&lt;Box&gt;" visibility="private"/>
+        <Field name="players" type="IPlayer" visibility="private"/>
+        <Field name="playerModels" type="Player" visibility="private"/>
+        <Field name="playerIndex" type="int" visibility="private"/>
+        <Field name="cpuPlayer" type="AI" visibility="private"/>
+        <Field name="additionalTurn" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="IPlayer" name="p1"/>
+          <Argument type="IPlayer" name="p2"/>
+          <Argument type="ArrayList" name="boxes"/>
+          <Argument type="int" name="type"/>
+          <Argument type="int" name="row"/>
+          <Argument type="int" name="col"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getPlayer" returnType="Player" visibility="public">
+          <Argument type="int" name="index"/>
+        </Method>
+        <Method name="boxIsFull" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="changePlayer" returnType="void" visibility="private"/>
+        <Method name="run" returnType="void" visibility="public"/>
+        <Method name="checkForAWinner" returnType="void" visibility="private"/>
+        <Method name="resetGame" returnType="void" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="GPanel" package="dotsandboxes" visibility="public" xPosition="1520.0" yPosition="20.0">
+      <Fields>
+        <Field name="lineList" type="ArrayList&lt;Line&gt;" visibility="private"/>
+        <Field name="boxList" type="ArrayList&lt;Box&gt;" visibility="private"/>
+        <Field name="lineDetector" type="LineDetection" visibility="private"/>
+        <Field name="selectedLine" type="int" visibility="private"/>
+        <Field name="row" type="int" visibility="private"/>
+        <Field name="col" type="int" visibility="private"/>
+        <Field name="gameController" type="GameController" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="int" name="rows"/>
+          <Argument type="int" name="columns"/>
+          <Argument type="int" name="type"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="paintComponent" returnType="void" visibility="public">
+          <Argument type="Graphics" name="g"/>
+        </Method>
+        <Method name="drawDotGrid" returnType="void" visibility="private">
+          <Argument type="Graphics2D" name="g"/>
+        </Method>
+        <Method name="drawLines" returnType="void" visibility="private">
+          <Argument type="Graphics2D" name="g"/>
+        </Method>
+        <Method name="drawBoxes" returnType="void" visibility="private">
+          <Argument type="Graphics2D" name="g"/>
+        </Method>
+        <Method name="setDimensions" returnType="void" visibility="public">
+          <Argument type="int" name="rows"/>
+          <Argument type="int" name="columns"/>
+        </Method>
+        <Method name="initLinesAndBoxes" returnType="void" visibility="private"/>
+        <Method name="getRows" returnType="int" visibility="public"/>
+        <Method name="getCols" returnType="int" visibility="public"/>
+        <Method name="getNrOfBoxes" returnType="int" visibility="public">
+          <Argument type="int" name="playerIndex"/>
+        </Method>
+        <Method name="getNrOfVictories" returnType="int" visibility="public">
+          <Argument type="int" name="playerIndex"/>
+        </Method>
+        <Method name="mouseClicked" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="e"/>
+        </Method>
+        <Method name="mousePressed" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="e"/>
+        </Method>
+        <Method name="mouseReleased" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="e"/>
+        </Method>
+        <Method name="mouseEntered" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="e"/>
+        </Method>
+        <Method name="mouseExited" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="e"/>
+        </Method>
+        <Method name="act" returnType="void" visibility="public"/>
+        <Method name="getTurn" returnType="int" visibility="public"/>
+        <Method name="winnerIs" returnType="void" visibility="public">
+          <Argument type="String" name="string"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Line" package="dotsandboxes" visibility="public" xPosition="320.0" yPosition="420.0">
+      <Fields>
+        <Field name="color" type="Color" visibility="private"/>
+        <Field name="height" type="int" visibility="private"/>
+        <Field name="id" type="int" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="ID"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="setColor" returnType="void" visibility="public">
+          <Argument type="Color" name="color"/>
+        </Method>
+        <Method name="getColor" returnType="Color" visibility="public"/>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="getHeight" returnType="int" visibility="public"/>
+        <Method name="setHeight" returnType="void" visibility="public">
+          <Argument type="int" name="h"/>
+        </Method>
+        <Method name="getWidth" returnType="int" visibility="public"/>
+        <Method name="setWidth" returnType="void" visibility="public">
+          <Argument type="int" name="w"/>
+        </Method>
+        <Method name="reset" returnType="void" visibility="package"/>
+      </Methods>
+    </Class>
+    <Class name="LineDetection" package="dotsandboxes" visibility="public" xPosition="620.0" yPosition="420.0">
+      <Fields>
+        <Field name="border" type="int" visibility="private"/>
+        <Field name="lineWidth" type="int" visibility="private"/>
+        <Field name="lineLength" type="int" visibility="private"/>
+        <Field name="numberOfColumns" type="int" visibility="private"/>
+        <Field name="numberOfRows" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="int" name="border"/>
+          <Argument type="int" name="lineWidth"/>
+          <Argument type="int" name="lineLength"/>
+          <Argument type="int" name="numberOfColumns"/>
+          <Argument type="int" name="numberOfRows"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getLine" returnType="int" visibility="public">
+          <Argument type="int" name="xCoordinate"/>
+          <Argument type="int" name="yCoordinate"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Player" package="dotsandboxes" visibility="public" xPosition="920.0" yPosition="420.0">
+      <Fields>
+        <Field name="color" type="Color" visibility="private"/>
+        <Field name="ownBoxes" type="ArrayList&lt;Integer&gt;" visibility="private" isFinal="true"/>
+        <Field name="victories" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Color" name="color"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getVictories" returnType="int" visibility="public"/>
+        <Method name="setVictories" returnType="void" visibility="public">
+          <Argument type="int" name="victories"/>
+        </Method>
+        <Method name="getColor" returnType="Color" visibility="public"/>
+        <Method name="addBox" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="getBoxes" returnType="ArrayList&lt;Integer&gt;" visibility="public"/>
+        <Method name="reset" returnType="void" visibility="package"/>
+        <Method name="addVictory" returnType="void" visibility="package"/>
+      </Methods>
+    </Class>
+    <Interface name="IBoxObserver" package="dotsandboxes" visibility="public" xPosition="1820.0" yPosition="20.0">
+      <Methods>
+        <Method name="boxIsFull" returnType="void" visibility="package">
+          <Argument type="int" name="id"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Interface name="IPlayer" package="dotsandboxes" visibility="public" xPosition="2120.0" yPosition="20.0">
+      <Methods>
+        <Method name="act" returnType="void" visibility="public"/>
+        <Method name="getTurn" returnType="int" visibility="public"/>
+      </Methods>
+    </Interface>
+    <Interface name="IWinnerCallback" package="dotsandboxes" visibility="public" xPosition="20.0" yPosition="492.0">
+      <Methods>
+        <Method name="winnerIs" returnType="void" visibility="package">
+          <Argument type="String" name="string"/>
+        </Method>
+      </Methods>
+    </Interface>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="playerModels" source="dotsandboxes.GameController" target="dotsandboxes.Player" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="lineN" source="dotsandboxes.Box" target="dotsandboxes.Line" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="dotsandboxes.GameController" target="dotsandboxes.Player" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="box3Line" source="dotsandboxes.AI" target="dotsandboxes.Box" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Box&gt;"/>
+    <UseRelation source="dotsandboxes.Box" target="dotsandboxes.IBoxObserver" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="lineE" source="dotsandboxes.Box" target="dotsandboxes.Line" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="dotsandboxes.GPanel" target="dotsandboxes.IPlayer"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="dotsandboxes.GameController" target="dotsandboxes.IBoxObserver"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="dotsandboxes.GPanel" target="dotsandboxes.IWinnerCallback"/>
+    <HasRelation name="box0Line" source="dotsandboxes.AI" target="dotsandboxes.Box" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Box&gt;"/>
+    <HasRelation name="lineList" source="dotsandboxes.GPanel" target="dotsandboxes.Line" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Line&gt;"/>
+    <HasRelation name="box1Line" source="dotsandboxes.AI" target="dotsandboxes.Box" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Box&gt;"/>
+    <HasRelation name="observer" source="dotsandboxes.Box" target="dotsandboxes.IBoxObserver" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="dotsandboxes.AI" target="dotsandboxes.Player"/>
+    <HasRelation name="gameController" source="dotsandboxes.GPanel" target="dotsandboxes.GameController" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="boxList" source="dotsandboxes.GameController" target="dotsandboxes.Box" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Box&gt;"/>
+    <UseRelation source="dotsandboxes.Box" target="dotsandboxes.Line" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="lineDetector" source="dotsandboxes.GPanel" target="dotsandboxes.LineDetection" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="gameView" source="dotsandboxes.DotsAndBoxes" target="dotsandboxes.GPanel" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="dotsandboxes.AI" target="dotsandboxes.IPlayer"/>
+    <HasRelation name="boxList" source="dotsandboxes.GPanel" target="dotsandboxes.Box" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Box&gt;"/>
+    <HasRelation name="box2Line" source="dotsandboxes.AI" target="dotsandboxes.Box" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Box&gt;"/>
+    <HasRelation name="lineW" source="dotsandboxes.Box" target="dotsandboxes.Line" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="boxList" source="dotsandboxes.AI" target="dotsandboxes.Box" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Box&gt;"/>
+    <HasRelation name="lineS" source="dotsandboxes.Box" target="dotsandboxes.Line" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="cpuPlayer" source="dotsandboxes.GameController" target="dotsandboxes.AI" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="lineList" source="dotsandboxes.DotsAndBoxes" target="dotsandboxes.Line" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Line&gt;"/>
+    <HasRelation name="players" source="dotsandboxes.GameController" target="dotsandboxes.Player" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
