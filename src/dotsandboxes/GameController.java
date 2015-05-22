@@ -22,31 +22,23 @@ public class GameController implements IBoxObserver, Runnable{
     private Player playerModels[] = new Player[2];
     private int playerIndex;
     private AI cpuPlayer;
+    private LoadGamePlayer loadGamePlayer;
     private boolean additionalTurn = false;
     private StorageGame gameSaver;
     
+    private int rows;
+    private int columns;
+    
+    private IPlayer localPlayer;
     
     public GameController(IPlayer p1, IPlayer p2, ArrayList boxes, int type, int rows, int columns) {
        
-                switch (type) {
-            case 0: //local game
-                players[0] = p1;
-                players[1] = p2;
-                playerModels[0] = new Player(Color.BLUE);
-                playerModels[1] = new Player(Color.RED);
-                break;
-            case 1: //network game
-                break;
-            case 2: //computer game
-                cpuPlayer = new AI(Color.GREEN, boxes, rows, columns);
-                players[0] = p1;
-                players[1] = cpuPlayer;
-                playerModels[0] = new Player(Color.BLUE);
-                playerModels[1] = cpuPlayer;
+        localPlayer = p1;
 
-                break;
-
-        }
+        this.rows = rows;
+        this.columns = columns;
+        
+        setGameType(type);
 
         boxList = boxes;
         for(int i = 0; i < boxList.size(); i++){
@@ -55,6 +47,34 @@ public class GameController implements IBoxObserver, Runnable{
         
         gameSaver = new StorageGame(type, rows, columns);
         
+    }
+    
+    public void setGameType(int gameType) {
+        switch (gameType) {
+            case 0: //local game
+                players[0] = localPlayer;
+                players[1] = localPlayer;
+                playerModels[0] = new Player(Color.BLUE);
+                playerModels[1] = new Player(Color.RED);
+                break;
+            case 1: //network game
+                break;
+            case 2: //computer game
+                cpuPlayer = new AI(Color.RED, boxList, rows, columns);
+                players[0] = localPlayer;
+                players[1] = cpuPlayer;
+                playerModels[0] = new Player(Color.BLUE);
+                playerModels[1] = cpuPlayer;
+                break;
+            case 3:
+                loadGamePlayer = new LoadGamePlayer();
+                players[0] = loadGamePlayer;
+                players[1] = loadGamePlayer;
+                playerModels[0] = new Player(Color.BLUE);
+                playerModels[1] = new Player(Color.RED);
+                break;
+
+        }
     }
     
     public Player getPlayer(int index){
@@ -82,8 +102,11 @@ public class GameController implements IBoxObserver, Runnable{
         while(true){
             checkForAWinner();
             int line = players[playerIndex].getTurn();
+            if(line == -2) {
+                this.setGameType(loadGamePlayer.getGameType());
+            }
             if(line != -1){
-                gameSaver.SaveTurn(playerIndex, line, playerModels[playerIndex].getColor());
+                gameSaver.saveTurn(playerIndex, line, playerModels[playerIndex].getColor());
                 for (int i = 0;i < boxList.size(); i++){
                     boxList.get(i).setLine(line, playerModels[playerIndex].getColor());
                 }

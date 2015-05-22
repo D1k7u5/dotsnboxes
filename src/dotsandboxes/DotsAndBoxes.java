@@ -298,14 +298,20 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
             JFileChooser fc = new JFileChooser();
             int result = fc.showOpenDialog(this);
             File file = fc.getSelectedFile();
+            LoadGamePlayer.setFileToLoad(file);
+            LoadGamePlayer loadGameSettings = new LoadGamePlayer();
+            this.gameType = 3;
+            this.setGameView(loadGameSettings.getRows(),loadGameSettings.getColumns());
+            
             
             //simulate gameplay with file
         }else if(e.getSource() == this.btnSaveGame){
             JFileChooser j = new JFileChooser();
-            j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            j.setFileSelectionMode(JFileChooser.SAVE_DIALOG);
             if (j.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) { 
                 System.out.println("getCurrentDirectory(): " +  j.getCurrentDirectory());
                 System.out.println("getSelectedFile() : " +  j.getSelectedFile());
+                StorageGame.saveGame(j.getSelectedFile());
             }else {
                 System.out.println("No Selection ");
             }

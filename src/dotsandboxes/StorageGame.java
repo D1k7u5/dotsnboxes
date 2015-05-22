@@ -20,10 +20,8 @@ import java.nio.channels.FileChannel;
 public class StorageGame {
     
     private PrintWriter printWriter;
-    private String pathLogFile = "./ressources/logFile";
-//    private final FileWriter textFile;
-//    private boolean fileOpen = true; 
-    private Object FileUtils;
+    private static String pathLogFile = "./ressources/logFile";
+
     private int rows;
     private int columns;
     private int gameType;
@@ -60,7 +58,7 @@ public class StorageGame {
         }
     }
     
-    public void SaveTurn(int PlayerID, int LineID, Color color) {
+    public void saveTurn(int PlayerID, int LineID, Color color) {
         
         try(FileWriter logfile = new FileWriter(pathLogFile, true)) {
             
@@ -80,9 +78,9 @@ public class StorageGame {
     
     }
     
-    public void SaveGame(String destinationPath) {
+    public static void  saveGame(File dest) {
         File logfile = new File(pathLogFile);
-        File dest = new File(destinationPath);
+        //File dest = new File(destinationPath);
         
         FileChannel inputChannel = null;
         FileChannel outputChannel = null;
