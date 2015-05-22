@@ -57,36 +57,11 @@ public class AI extends Player implements IPlayer {
     }
     
     private void check0Lines(){
-        /*
         Box bestBox;
-        Iterator<Box> iteratorC = BoxNeighbours.getCorner().iterator();
-        while(iteratorC.hasNext()){
-            if(iteratorC.next().equals(row))
-            bestBox = iteratorC.next();
-            break;
+        Iterator iterator0 = box0Line.iterator();
+        while(iterator0.hasNext()){
+            
         }
-        
-        while(iteratorC.hasNext()){
-            for(Box box0 : box0Line){
-                if(box0.equals(iteratorC.next())){
-                    bestBox = box0;
-                }
-            }
-        }
-        
-        Iterator<Box> iteratorE = BoxNeighbours.getEdge().iterator();
-        while(iteratorE.hasNext()){
-            bestBox = iteratorE.next();
-            break;
-        }
-        Iterator<Box> iteratorI = BoxNeighbours.getCorner().iterator();
-        while(iteratorI.hasNext()){
-            bestBox = iteratorI.next();
-            break;
-        }
-        
-        
-     */   
     }
     
     private void check1Line(){
@@ -129,7 +104,7 @@ public class AI extends Player implements IPlayer {
     private void setRandomTurn(){
         boolean impossibleBox = true;
         while(impossibleBox){
-            int chooseBox = (int) Math.random()*(row*col+1);
+            int chooseBox = (int) (Math.random()*(row*col)+1);
             for(Box box : boxList){
                 if(box.getId() == chooseBox){
                     if(box.getLineN().getColor() == Color.LIGHT_GRAY){
