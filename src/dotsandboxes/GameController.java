@@ -22,6 +22,7 @@ public class GameController implements IBoxObserver, Runnable{
     private Player playerModels[] = new Player[2];
     private int playerIndex;
     private ComputerLogic cpuPlayer;
+    private StorageGame gameSaver;
     
     public GameController(IPlayer p1, IPlayer p2, ArrayList boxes, int type, int rows, int columns) {
        
@@ -49,6 +50,9 @@ public class GameController implements IBoxObserver, Runnable{
         for(int i = 0; i < boxList.size(); i++){
             boxList.get(i).setObserver(this);
         } 
+        
+        gameSaver = new StorageGame(type, rows, columns);
+        
     }
     
     public Player getPlayer(int index){
@@ -76,6 +80,7 @@ public class GameController implements IBoxObserver, Runnable{
             checkForAWinner();
             int line = players[playerIndex].getTurn();
             if(line != -1){
+                gameSaver.SaveTurn(playerIndex, line, playerModels[playerIndex].getColor());
                 for (int i = 0;i < boxList.size(); i++){
                     boxList.get(i).setLine(line, playerModels[playerIndex].getColor());
                 }
@@ -103,6 +108,8 @@ public class GameController implements IBoxObserver, Runnable{
         }
         playerModels[0].reset();
         playerModels[1].reset();
+        
+        gameSaver.reInitFile(playerModels[0].getVictories(), playerModels[1].getVictories());
     }
     
 }
