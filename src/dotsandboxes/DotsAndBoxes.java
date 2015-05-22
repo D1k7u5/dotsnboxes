@@ -66,9 +66,7 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
         loc = new JRadioButton();
         loc.setSelected(true);
         net = new JRadioButton();
-        net.setEnabled(false);
         com = new JRadioButton();
-        com.setEnabled(false);
         //Game view panel
         gameView = new GPanel();
         //dummy panel for layout
@@ -120,6 +118,9 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
         start.addActionListener(this);
         btnLoadGame.addActionListener(this);
         btnNewGame.addActionListener(this);
+        loc.addActionListener(this);
+        com.addActionListener(this);
+        net.addActionListener(this);
         //start menu
         menuPanel.setLayout(new GridLayout(6,2));
         menuPanel.add(labelRow);
@@ -210,10 +211,16 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
             }
         }else if (e.getSource() == this.loc){
             gameType = 0;
+            com.setSelected(false);
+            net.setSelected(false);
         }else if(e.getSource() == this.net){
             gameType = 1;
+            loc.setSelected(false);
+            com.setSelected(false);
         }else if(e.getSource() == this.com){
             gameType = 2;
+            loc.setSelected(false);
+            net.setSelected(false);
         }else if(e.getSource() == this.btnNewGame){
             //go back to menu view
         }else if(e.getSource() == this.btnLoadGame){
