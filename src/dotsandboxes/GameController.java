@@ -25,6 +25,7 @@ public class GameController implements IBoxObserver, Runnable{
     private LoadGamePlayer loadGamePlayer;
     private boolean additionalTurn = false;
     private StorageGame gameSaver;
+    private IWinnerCallback observer;
     
     private int rows;
     private int columns;
@@ -128,6 +129,12 @@ public class GameController implements IBoxObserver, Runnable{
         if ((boxList.size() / 2) < (playerModels[playerIndex].getBoxes().size())){
             System.out.println("Player "+(playerIndex+1)+" wins!!");
             playerModels[playerIndex].addVictory();
+            observer.winnerIs("Player "+(playerIndex+1)+" wins!!");
+            resetGame();
+        }else if ((playerModels[0].getBoxes().size() == playerModels[1].getBoxes().size()) 
+                && (playerModels[0].getBoxes().size() == (boxList.size()/2))){
+            System.out.println("No winner! DRAW!");
+            observer.winnerIs("No winner! DRAW!");
             resetGame();
         }
         }catch(Exception e){
@@ -143,6 +150,10 @@ public class GameController implements IBoxObserver, Runnable{
         playerModels[1].reset();
         
         gameSaver.reInitFile(playerModels[0].getVictories(), playerModels[1].getVictories());
+    }
+
+    void addWinnerObserver(GPanel aThis) {
+        observer = aThis;
     }
     
 }

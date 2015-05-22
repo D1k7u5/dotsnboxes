@@ -6,12 +6,14 @@
 package dotsandboxes;
 
 import java.awt.Color;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -47,6 +49,7 @@ public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCal
         lineDetector = new LineDetection(40 + 16, 24, 80, columns, row);
         
         gameController = new GameController(this, this, boxList,type, row, col);
+        gameController.addWinnerObserver(this);
         new Thread(gameController).start();
     }
 
@@ -229,7 +232,6 @@ public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCal
 
     @Override
     public void winnerIs(String string) {
-        //save data in GUI... rounds, wins...
-        //TODO: correct formal parameters
+        JOptionPane.showMessageDialog(this, string);
     }
 }

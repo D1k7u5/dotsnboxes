@@ -24,6 +24,7 @@ public class AI extends Player implements IPlayer {
     private int selectedLine = 0;
     private final int row;
     private final int col;
+    private BoxNeighbours boxNeighbours;
     
 
     public AI(Color color, ArrayList<Box> boxlist, int row, int col){
@@ -31,6 +32,7 @@ public class AI extends Player implements IPlayer {
         this.boxList = boxlist;
         this.row = row;
         this.col = col;
+        boxNeighbours = new BoxNeighbours(row,col);
     }
 
     /**
@@ -48,43 +50,299 @@ public class AI extends Player implements IPlayer {
         }
     }
     
-    private void check3LineBoxes(){
-        
-        for(Box box : boxList){
-            
-        }
-        
-    }
-    
-    private void check0Lines(){
-        Box bestBox;
-        Iterator iterator0 = box0Line.iterator();
-        while(iterator0.hasNext()){
-            
-        }
-    }
-    
-    private void check1Line(){
-        Box bestBox;
-    }
-    
-    /**
-     * Prüfe Boxen mit zwei Linien und erstelle
-     */
-    private void check2Line(){
-        Box bestBox;
-        /*
-        
-        for(Box box : box2Line){
-            if(box.getLineN() == null){
-                //Prüfe Box im Norden
+    private boolean setFourthLine(){
+        boolean foundLine = false;
+        Box box = box3Line.get(0);
+            if(box.getLineN().getColor()== Color.LIGHT_GRAY){
+                selectedLine = box.getLineN().getId();
+                foundLine = true;
             }
-            if(box.getLineE() == null){
-                twoLineTube.
-                //Prüfe Box im Osten
+            else if(box.getLineE().getColor()== Color.LIGHT_GRAY){
+                selectedLine = box.getLineE().getId();
+                foundLine = true;
+            }
+            else if(box.getLineS().getColor()== Color.LIGHT_GRAY){
+                selectedLine = box.getLineS().getId();
+                foundLine = true;
+            }
+            else if(box.getLineW().getColor() == Color.LIGHT_GRAY){
+                selectedLine = box.getLineW().getId();
+                foundLine = true;
+            }
+            return foundLine;
+    }
+    
+    private boolean setFirstLine(){
+        //BoxC = CenterBox  boxLoop = soll Nachbarsbox aus boxList finden
+        boolean foundLine = false;
+        Box boxC;
+        int edgeLine = -1;
+        int lineNeighbourWith0 = -1;
+        int lineNeighbourWith1 = -1;
+        int lineNeighbourWith2 = -1;
+        
+        //Durchlaufe Array von Boxen mit einer Linie
+        for(int i =0; i<= box0Line.size();i++){
+            boxC = box0Line.get(i);
+            //Prüfe Linie im Norden & Prüfe Nachbar wenn Linie frei
+            
+            NeighbourValues north = this.secondLineN(boxC);
+            NeighbourValues east = this.secondLineE(boxC);
+            NeighbourValues south = this.secondLineS(boxC);
+            NeighbourValues west = this.secondLineW(boxC);
+            
+            switch(north.numbersOfLines){
+                case 0: lineNeighbourWith0 = north.lineID;
+                        foundLine = true;
+                        break;
+                
+                case 1: lineNeighbourWith1 = north.lineID;
+                        foundLine= true;
+                        break;
+                    
+                case 2: lineNeighbourWith2 = north.lineID;
+                        break;
+                    
+                case 5: edgeLine = north.lineID;
+                        selectedLine = edgeLine;
+                        foundLine = true;
+                        return foundLine;
+                    
+                default: break;     
+            }
+            if(edgeLine!=-1){
+                i=1000;
             }
         }
-        */
+        if(lineNeighbourWith1 != -1){
+            selectedLine = lineNeighbourWith1;
+        }
+        else if(lineNeighbourWith0 != -1){
+            selectedLine = lineNeighbourWith0;
+        }
+        
+        return foundLine;
+    }
+    
+    private boolean setSecondLine(){
+        //BoxC = CenterBox  boxLoop = soll Nachbarsbox aus boxList finden
+        boolean foundLine = false;
+        Box boxC;
+        int edgeLine = -1;
+        int lineNeighbourWith0 = -1;
+        int lineNeighbourWith1 = -1;
+        int lineNeighbourWith2 = -1;
+        
+        //Durchlaufe Array von Boxen mit einer Linie
+        for(int i =0; i<= box1Line.size();i++){
+            boxC = box1Line.get(i);
+            //Prüfe Linie im Norden & Prüfe Nachbar wenn Linie frei
+            
+            NeighbourValues north = this.secondLineN(boxC);
+            NeighbourValues east = this.secondLineE(boxC);
+            NeighbourValues south = this.secondLineS(boxC);
+            NeighbourValues west = this.secondLineW(boxC);
+            
+            switch(north.numbersOfLines){
+                case 0: lineNeighbourWith0 = north.lineID;
+                        foundLine = true;
+                        break;
+                
+                case 1: lineNeighbourWith1 = north.lineID;
+                        foundLine= true;
+                        break;
+                    
+                case 2: lineNeighbourWith2 = north.lineID;
+                        break;
+                    
+                case 5: edgeLine = north.lineID;
+                        selectedLine = edgeLine;
+                        foundLine = true;
+                        return foundLine;
+                    
+                default: break;     
+            }
+            switch(east.numbersOfLines){
+                case 0: lineNeighbourWith0 = east.lineID;
+                        foundLine = true;
+                        break;
+                
+                case 1: lineNeighbourWith1 = east.lineID;
+                        foundLine= true;
+                        break;
+                    
+                case 2: lineNeighbourWith2 = east.lineID;
+                        break;
+                    
+                case 5: edgeLine = east.lineID;
+                        selectedLine = edgeLine;
+                        foundLine = true;
+                        return foundLine;
+                    
+                default: break;     
+            }
+            
+            switch(south.numbersOfLines){
+                case 0: lineNeighbourWith0 = south.lineID;
+                        foundLine = true;
+                        break;
+                
+                case 1: lineNeighbourWith1 = south.lineID;
+                        foundLine= true;
+                        break;
+                    
+                case 2: lineNeighbourWith2 = south.lineID;
+                        break;
+                    
+                case 5: edgeLine = south.lineID;
+                        selectedLine = edgeLine;
+                        foundLine = true;
+                        return foundLine;
+                    
+                default: break;     
+            }
+            
+            switch(west.numbersOfLines){
+                case 0: lineNeighbourWith0 = west.lineID;
+                        foundLine = true;
+                        break;
+                
+                case 1: lineNeighbourWith1 = west.lineID;
+                        foundLine= true;
+                        break;
+                    
+                case 2: lineNeighbourWith2 = west.lineID;
+                        break;
+                    
+                case 5: edgeLine = west.lineID;
+                        selectedLine = edgeLine;
+                        foundLine = true;
+                        return foundLine;
+                    
+                default: break;     
+            }
+        }
+        if(lineNeighbourWith1 != -1){
+            selectedLine = lineNeighbourWith1;
+        }
+        else if(lineNeighbourWith0 != -1){
+            selectedLine = lineNeighbourWith0;
+        }
+        
+        return foundLine;
+    }
+    
+    
+    private NeighbourValues secondLineN(Box boxC){
+        if(boxC.getLineN().getColor()== Color.LIGHT_GRAY){
+                int boxNid = boxNeighbours.getBoxN(boxC.getId());
+                
+                if(boxNid == -1){
+                   selectedLine = boxC.getLineN().getId();
+                   return new NeighbourValues(boxC.getLineN().getId(), 5);
+                }
+                else{
+                    //Suche boxN
+                    for(Box boxLoop : boxList){
+                        //Prüfe ID
+                        if(boxLoop.getId()== boxNid){
+                            //Prüfe anzahl Linien
+                            if(boxLoop.getNumberOfSetedLines()==1){
+                                return new NeighbourValues(boxC.getLineN().getId(),1);
+                            }
+                            else if(boxLoop.getNumberOfSetedLines()==0){
+                                return new NeighbourValues(boxC.getLineN().getId(),0);
+                            }
+                        }
+                    }
+                }
+            }
+    return new NeighbourValues(-1,-1);        
+    }
+    
+    private NeighbourValues secondLineE(Box boxC){
+        if(boxC.getLineE().getColor()== Color.LIGHT_GRAY){
+                int boxEid = boxNeighbours.getBoxE(boxC.getId());
+                
+                if(boxEid == -1){
+                   selectedLine = boxC.getLineE().getId();
+                   return new NeighbourValues(boxC.getLineE().getId(), 5);
+                }
+                else{
+                    //Suche boxN
+                    for(Box boxLoop : boxList){
+                        //Prüfe ID
+                        if(boxLoop.getId()== boxEid){
+                            //Prüfe anzahl Linien
+                            if(boxLoop.getNumberOfSetedLines()==1){
+                                return new NeighbourValues(boxC.getLineE().getId(),1);
+                            }
+                            else if(boxLoop.getNumberOfSetedLines()==0){
+                                return new NeighbourValues(boxC.getLineE().getId(),0);
+                            }
+                        }
+                    }
+                }
+            }
+    return new NeighbourValues(-1,-1);        
+    }
+    
+    private NeighbourValues secondLineS(Box boxC){
+        if(boxC.getLineS().getColor()== Color.LIGHT_GRAY){
+                int boxSid = boxNeighbours.getBoxS(boxC.getId());
+                
+                if(boxSid == -1){
+                   selectedLine = boxC.getLineS().getId();
+                   return new NeighbourValues(boxC.getLineS().getId(), 5);
+                }
+                else{
+                    //Suche boxN
+                    for(Box boxLoop : boxList){
+                        //Prüfe ID
+                        if(boxLoop.getId()== boxSid){
+                            //Prüfe anzahl Linien
+                            if(boxLoop.getNumberOfSetedLines()==1){
+                                return new NeighbourValues(boxC.getLineS().getId(),1);
+                            }
+                            else if(boxLoop.getNumberOfSetedLines()==0){
+                                return new NeighbourValues(boxC.getLineS().getId(),0);
+                            }
+                        }
+                    }
+                }
+            }
+    return new NeighbourValues(-1,-1);        
+    }
+    
+    private NeighbourValues secondLineW(Box boxC){
+        if(boxC.getLineW().getColor()== Color.LIGHT_GRAY){
+                int boxWid = boxNeighbours.getBoxW(boxC.getId());
+                
+                if(boxWid == -1){
+                   selectedLine = boxC.getLineW().getId();
+                   return new NeighbourValues(boxC.getLineW().getId(), 5);
+                }
+                else{
+                    //Suche boxN
+                    for(Box boxLoop : boxList){
+                        //Prüfe ID
+                        if(boxLoop.getId()== boxWid){
+                            //Prüfe anzahl Linien
+                            if(boxLoop.getNumberOfSetedLines()==1){
+                                return new NeighbourValues(boxC.getLineW().getId(),1);
+                            }
+                            else if(boxLoop.getNumberOfSetedLines()==0){
+                                return new NeighbourValues(boxC.getLineW().getId(),0);
+                            }
+                        }
+                    }
+                }
+            }
+    return new NeighbourValues(-1,-1);        
+    }
+    
+    private void setThirdLine(){
+
     }
 
     @Override
@@ -98,6 +356,13 @@ public class AI extends Player implements IPlayer {
         this.setRandomTurn();
         int result = selectedLine;
         return result;
+    }
+    
+    
+    private void setAITurn(){
+        if(setFourthLine()){}
+        else if(setSecondLine()){}
+        else if(setFirstLine()){}
     }
     
     

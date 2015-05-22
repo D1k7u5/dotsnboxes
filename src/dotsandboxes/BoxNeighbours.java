@@ -24,6 +24,45 @@ public class BoxNeighbours {
         this.col = col;
     }
     
+    public int getBoxN(int BoxID){
+        if(BoxID<=col){
+            return -1;
+        }
+        else{
+            return (BoxID - col);
+        }
+    }
+    
+    public int getBoxE(int BoxID){
+        if(BoxID%row == 0){
+            return -1;
+        }
+        else{
+            return (BoxID + 1);
+        }
+    }
+    /**
+     * @return Ist die Box am Südrand, so gib -1 zurück. 
+     * Falls nicht gib BoxID der südlichen Box zurück
+    */
+    public int getBoxS(int BoxID){
+        if(BoxID >= (row*col-col)){
+            return -1;
+        }
+        else{
+            return (BoxID + col);
+        }
+    }
+    
+    public int getBoxW(int BoxID){
+        if(BoxID%col== 1){
+            return -1;
+        }
+        else{
+            return (BoxID-1);
+        }
+    }
+    
     public static ArrayList getCorner(){
         return corner;
     }
