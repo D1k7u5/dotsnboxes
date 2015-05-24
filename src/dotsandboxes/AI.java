@@ -19,7 +19,7 @@ public class AI extends Player implements IPlayer {
     private ArrayList<Box> box1Line = new ArrayList<>();
     private ArrayList<Box> box2Line = new ArrayList<>();
     private ArrayList<Box> box3Line = new ArrayList<>();
-    private ArrayList<ArrayList> twoLineTube = new ArrayList<>(); //Zusammenhängende Boxen mit zwei Linien, zu offenen Linien
+    private ArrayList<ArrayList> tubeList = new ArrayList<>(); //Zusammenhängende Boxen mit zwei Linien, zu offenen Linien
     private ArrayList<Box> boxList;
     private int selectedLine = 0;
     private final int row;
@@ -398,22 +398,84 @@ public class AI extends Player implements IPlayer {
     return new NeighbourValues(-1,-1);        
     }
     
-    private void setThirdLine(){
-        ArrayList<ArrayList> tubeList = new ArrayList<>();
+    private boolean setThirdLine(){
+        this.setTubeList();
+        ArrayList<Box> smallestTube = tubeList.get(0);
+        for(ArrayList list : tubeList){
+            if(smallestTube.size() > list.size()){
+                smallestTube = list;
+            }
+        }
+        if(getBox(boxNeighbours.getBoxN(smallestTube.get(0).getId())).getNumberOfSetedLines() ==2){
+            selectedLine = smallestTube.get(0).getLineN().getId();
+        }
+        else if(getBox(boxNeighbours.getBoxE(smallestTube.get(0).getId())).getNumberOfSetedLines() ==2){
+            selectedLine = smallestTube.get(0).getLineE().getId();
+        }
+        else if(getBox(boxNeighbours.getBoxS(smallestTube.get(0).getId())).getNumberOfSetedLines() ==2){
+            selectedLine = smallestTube.get(0).getLineS().getId();
+        }
+        else if(getBox(boxNeighbours.getBoxW(smallestTube.get(0).getId())).getNumberOfSetedLines() ==2){
+            selectedLine = smallestTube.get(0).getLineW().getId();
+        }
+        return true;
+    }
+    
+    private void setTubeList(){
         ArrayList<Box> checkedBoxes = new ArrayList<>();
+        Box currentBox;
         for(Box box : box2Line){
-            if(checkedBoxes.contains(box)){}
-            else{
+            if(!checkedBoxes.contains(box)){
                 checkedBoxes.add(box);
                 ArrayList<Box> oneTube = new ArrayList<>();
                 oneTube.add(box);
+                currentBox = box;
                 boolean aNeighbourHave2Lines = true;
-                while(aNeighbourHave2Lines)
-                if(box.getLineN().getColor() == Color.LIGHT_GRAY){
-                    boxNeighbours.getBoxN(box.getId())
+                while(aNeighbourHave2Lines){
+                    if((currentBox.getLineN().getColor() == Color.LIGHT_GRAY) 
+                            && box2Line.contains(boxNeighbours.getBoxN(currentBox.getId()))
+                            && !checkedBoxes.contains(boxNeighbours.getBoxN(currentBox.getId()))){
+                        currentBox = getBox(boxNeighbours.getBoxN(currentBox.getId()));
+                        checkedBoxes.add(currentBox);
+                        oneTube.add(currentBox);
+                    }
+                    else if((currentBox.getLineE().getColor() == Color.LIGHT_GRAY) 
+                            && box2Line.contains(boxNeighbours.getBoxE(currentBox.getId()))
+                            && !checkedBoxes.contains(boxNeighbours.getBoxE(currentBox.getId()))){
+                        currentBox = getBox(boxNeighbours.getBoxE(currentBox.getId()));
+                        checkedBoxes.add(currentBox);
+                        oneTube.add(currentBox);
+                    }
+                    else if((currentBox.getLineS().getColor() == Color.LIGHT_GRAY) 
+                            && box2Line.contains(boxNeighbours.getBoxS(currentBox.getId()))
+                            && !checkedBoxes.contains(boxNeighbours.getBoxS(currentBox.getId()))){
+                        currentBox = getBox(boxNeighbours.getBoxS(currentBox.getId()));
+                        checkedBoxes.add(currentBox);
+                        oneTube.add(currentBox);
+                    }
+                    else if((currentBox.getLineW().getColor() == Color.LIGHT_GRAY) 
+                            && box2Line.contains(boxNeighbours.getBoxW(currentBox.getId()))
+                            && !checkedBoxes.contains(boxNeighbours.getBoxW(currentBox.getId()))){
+                        currentBox = getBox(boxNeighbours.getBoxW(currentBox.getId()));
+                        checkedBoxes.add(currentBox);
+                        oneTube.add(currentBox);
+                    }
+                    else{
+                        tubeList.add(oneTube);
+                        aNeighbourHave2Lines = false;
+                    }
                 }
             }
         }
+    }
+    
+    private Box getBox(int id){
+        for(Box box : boxList){
+            if(box.getId() == id){
+                return box;
+            }
+        }
+        return new Box(1000);
     }
 
     @Override
@@ -434,6 +496,12 @@ public class AI extends Player implements IPlayer {
         if(setFourthLine()){}
         else if(setSecondLine()){}
         else if(setFirstLine()){}
+        else if(setThirdLine()){}
+        box0Line.clear();
+        box1Line.clear();
+        box2Line.clear();
+        box3Line.clear();
+        tubeList.clear();
     }
     
     
