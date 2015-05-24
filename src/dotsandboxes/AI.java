@@ -86,30 +86,88 @@ public class AI extends Player implements IPlayer {
             boxC = box0Line.get(i);
             //Prüfe Linie im Norden & Prüfe Nachbar wenn Linie frei
             
-            NeighbourValues north = this.secondLineN(boxC);
-            NeighbourValues east = this.secondLineE(boxC);
-            NeighbourValues south = this.secondLineS(boxC);
-            NeighbourValues west = this.secondLineW(boxC);
+            NeighbourValues north = this.checkLineN(boxC);
+            NeighbourValues east = this.checkLineE(boxC);
+            NeighbourValues south = this.checkLineS(boxC);
+            NeighbourValues west = this.checkLineW(boxC);
             
-            switch(north.numbersOfLines){
-                case 0: lineNeighbourWith0 = north.lineID;
+            switch(north.getNumbersOfLines()){
+                case 0: lineNeighbourWith0 = north.getLineID();
                         foundLine = true;
                         break;
                 
-                case 1: lineNeighbourWith1 = north.lineID;
+                case 1: lineNeighbourWith1 = north.getLineID();
                         foundLine= true;
                         break;
                     
-                case 2: lineNeighbourWith2 = north.lineID;
+                case 2: lineNeighbourWith2 = north.getLineID();
                         break;
                     
-                case 5: edgeLine = north.lineID;
+                case 5: edgeLine = north.getLineID();
                         selectedLine = edgeLine;
                         foundLine = true;
                         return foundLine;
                     
                 default: break;     
             }
+            switch(east.getNumbersOfLines()){
+                case 0: lineNeighbourWith0 = east.getLineID();
+                        foundLine = true;
+                        break;
+                
+                case 1: lineNeighbourWith1 = east.getLineID();
+                        foundLine= true;
+                        break;
+                    
+                case 2: lineNeighbourWith2 = east.getLineID();
+                        break;
+                    
+                case 5: edgeLine = north.getLineID();
+                        selectedLine = edgeLine;
+                        foundLine = true;
+                        return foundLine;
+                    
+                default: break;     
+            }
+            switch(south.getNumbersOfLines()){
+                case 0: lineNeighbourWith0 = north.getLineID();
+                        foundLine = true;
+                        break;
+                
+                case 1: lineNeighbourWith1 = south.getLineID();
+                        foundLine= true;
+                        break;
+                    
+                case 2: lineNeighbourWith2 = south.getLineID();
+                        break;
+                    
+                case 5: edgeLine = south.getLineID();
+                        selectedLine = edgeLine;
+                        foundLine = true;
+                        return foundLine;
+                    
+                default: break;     
+            }
+            switch(west.getNumbersOfLines()){
+                case 0: lineNeighbourWith0 = west.getLineID();
+                        foundLine = true;
+                        break;
+                
+                case 1: lineNeighbourWith1 =west.getLineID();
+                        foundLine= true;
+                        break;
+                    
+                case 2: lineNeighbourWith2 = west.getLineID();
+                        break;
+                    
+                case 5: edgeLine = west.getLineID();
+                        selectedLine = edgeLine;
+                        foundLine = true;
+                        return foundLine;
+                    
+                default: break;     
+            }
+            
             if(edgeLine!=-1){
                 i=1000;
             }
@@ -138,63 +196,43 @@ public class AI extends Player implements IPlayer {
             boxC = box1Line.get(i);
             //Prüfe Linie im Norden & Prüfe Nachbar wenn Linie frei
             
-            NeighbourValues north = this.secondLineN(boxC);
-            NeighbourValues east = this.secondLineE(boxC);
-            NeighbourValues south = this.secondLineS(boxC);
-            NeighbourValues west = this.secondLineW(boxC);
+            NeighbourValues north = this.checkLineN(boxC);
+            NeighbourValues east = this.checkLineE(boxC);
+            NeighbourValues south = this.checkLineS(boxC);
+            NeighbourValues west = this.checkLineW(boxC);
             
-            switch(north.numbersOfLines){
-                case 0: lineNeighbourWith0 = north.lineID;
+            switch(north.getNumbersOfLines()){
+                case 0: lineNeighbourWith0 = north.getLineID();
                         foundLine = true;
                         break;
                 
-                case 1: lineNeighbourWith1 = north.lineID;
+                case 1: lineNeighbourWith1 = north.getLineID();
                         foundLine= true;
                         break;
                     
-                case 2: lineNeighbourWith2 = north.lineID;
+                case 2: lineNeighbourWith2 = north.getLineID();
                         break;
                     
-                case 5: edgeLine = north.lineID;
+                case 5: edgeLine = north.getLineID();
                         selectedLine = edgeLine;
                         foundLine = true;
                         return foundLine;
                     
                 default: break;     
             }
-            switch(east.numbersOfLines){
-                case 0: lineNeighbourWith0 = east.lineID;
+            switch(east.getNumbersOfLines()){
+                case 0: lineNeighbourWith0 = east.getLineID();
                         foundLine = true;
                         break;
                 
-                case 1: lineNeighbourWith1 = east.lineID;
+                case 1: lineNeighbourWith1 = east.getLineID();
                         foundLine= true;
                         break;
                     
-                case 2: lineNeighbourWith2 = east.lineID;
+                case 2: lineNeighbourWith2 = east.getLineID();
                         break;
                     
-                case 5: edgeLine = east.lineID;
-                        selectedLine = edgeLine;
-                        foundLine = true;
-                        return foundLine;
-                    
-                default: break;     
-            }
-            
-            switch(south.numbersOfLines){
-                case 0: lineNeighbourWith0 = south.lineID;
-                        foundLine = true;
-                        break;
-                
-                case 1: lineNeighbourWith1 = south.lineID;
-                        foundLine= true;
-                        break;
-                    
-                case 2: lineNeighbourWith2 = south.lineID;
-                        break;
-                    
-                case 5: edgeLine = south.lineID;
+                case 5: edgeLine = east.getLineID();
                         selectedLine = edgeLine;
                         foundLine = true;
                         return foundLine;
@@ -202,19 +240,39 @@ public class AI extends Player implements IPlayer {
                 default: break;     
             }
             
-            switch(west.numbersOfLines){
-                case 0: lineNeighbourWith0 = west.lineID;
+            switch(south.getNumbersOfLines()){
+                case 0: lineNeighbourWith0 = south.getLineID();
                         foundLine = true;
                         break;
                 
-                case 1: lineNeighbourWith1 = west.lineID;
+                case 1: lineNeighbourWith1 = south.getLineID();
                         foundLine= true;
                         break;
                     
-                case 2: lineNeighbourWith2 = west.lineID;
+                case 2: lineNeighbourWith2 = south.getLineID();
                         break;
                     
-                case 5: edgeLine = west.lineID;
+                case 5: edgeLine = south.getLineID();
+                        selectedLine = edgeLine;
+                        foundLine = true;
+                        return foundLine;
+                    
+                default: break;     
+            }
+            
+            switch(west.getNumbersOfLines()){
+                case 0: lineNeighbourWith0 = west.getLineID();
+                        foundLine = true;
+                        break;
+                
+                case 1: lineNeighbourWith1 = west.getLineID();
+                        foundLine= true;
+                        break;
+                    
+                case 2: lineNeighbourWith2 = west.getLineID();
+                        break;
+                    
+                case 5: edgeLine = west.getLineID();
                         selectedLine = edgeLine;
                         foundLine = true;
                         return foundLine;
@@ -231,9 +289,8 @@ public class AI extends Player implements IPlayer {
         
         return foundLine;
     }
-    
-    
-    private NeighbourValues secondLineN(Box boxC){
+       
+    private NeighbourValues checkLineN(Box boxC){
         if(boxC.getLineN().getColor()== Color.LIGHT_GRAY){
                 int boxNid = boxNeighbours.getBoxN(boxC.getId());
                 
@@ -260,7 +317,7 @@ public class AI extends Player implements IPlayer {
     return new NeighbourValues(-1,-1);        
     }
     
-    private NeighbourValues secondLineE(Box boxC){
+    private NeighbourValues checkLineE(Box boxC){
         if(boxC.getLineE().getColor()== Color.LIGHT_GRAY){
                 int boxEid = boxNeighbours.getBoxE(boxC.getId());
                 
@@ -287,7 +344,7 @@ public class AI extends Player implements IPlayer {
     return new NeighbourValues(-1,-1);        
     }
     
-    private NeighbourValues secondLineS(Box boxC){
+    private NeighbourValues checkLineS(Box boxC){
         if(boxC.getLineS().getColor()== Color.LIGHT_GRAY){
                 int boxSid = boxNeighbours.getBoxS(boxC.getId());
                 
@@ -314,7 +371,7 @@ public class AI extends Player implements IPlayer {
     return new NeighbourValues(-1,-1);        
     }
     
-    private NeighbourValues secondLineW(Box boxC){
+    private NeighbourValues checkLineW(Box boxC){
         if(boxC.getLineW().getColor()== Color.LIGHT_GRAY){
                 int boxWid = boxNeighbours.getBoxW(boxC.getId());
                 
@@ -342,7 +399,21 @@ public class AI extends Player implements IPlayer {
     }
     
     private void setThirdLine(){
-
+        ArrayList<ArrayList> tubeList = new ArrayList<>();
+        ArrayList<Box> checkedBoxes = new ArrayList<>();
+        for(Box box : box2Line){
+            if(checkedBoxes.contains(box)){}
+            else{
+                checkedBoxes.add(box);
+                ArrayList<Box> oneTube = new ArrayList<>();
+                oneTube.add(box);
+                boolean aNeighbourHave2Lines = true;
+                while(aNeighbourHave2Lines)
+                if(box.getLineN().getColor() == Color.LIGHT_GRAY){
+                    boxNeighbours.getBoxN(box.getId())
+                }
+            }
+        }
     }
 
     @Override

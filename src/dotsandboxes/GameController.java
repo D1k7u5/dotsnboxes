@@ -22,6 +22,7 @@ public class GameController implements IBoxObserver, Runnable{
     private Player playerModels[] = new Player[2];
     private int playerIndex;
     private AI cpuPlayer;
+    private RandomAI randomCpuPlayer;
     private boolean additionalTurn = false;
     private int difficulty = 0;
     private IWinnerCallback observer;
@@ -75,6 +76,13 @@ public class GameController implements IBoxObserver, Runnable{
                 players[1] = loadGamePlayer;
                 playerModels[0] = new Player(Color.BLUE);
                 playerModels[1] = new Player(Color.RED);
+                break;
+            case 4: //computer random game
+                randomCpuPlayer = new RandomAI(Color.RED, boxList, rows, columns);
+                players[0] = localPlayer;
+                players[1] = cpuPlayer;
+                playerModels[0] = new Player(Color.BLUE);
+                playerModels[1] = cpuPlayer;
                 break;
         }
     }
