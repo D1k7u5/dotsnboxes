@@ -273,6 +273,7 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
                         this.setGameView(Integer.parseInt(this.fieldRow.getText()),Integer.parseInt(this.fieldCol.getText()));
 //                        gameView.setDifficulty(option);
                         break;
+                        
                 }
                                 
             }

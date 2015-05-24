@@ -15,18 +15,24 @@ import java.util.Iterator;
  */
 public class AI extends Player implements IPlayer {
     
-    private ArrayList<Box> box0Line = new ArrayList<>();
-    private ArrayList<Box> box1Line = new ArrayList<>();
-    private ArrayList<Box> box2Line = new ArrayList<>();
-    private ArrayList<Box> box3Line = new ArrayList<>();
+    private ArrayList<Box> box0Line = new ArrayList<>(); //Noch leere Boxen
+    private ArrayList<Box> box1Line = new ArrayList<>(); //Boxen mit einer markierten Line
+    private ArrayList<Box> box2Line = new ArrayList<>(); //Boxen mit zwei markierten Lines
+    private ArrayList<Box> box3Line = new ArrayList<>(); //Boxen mit drei markierten Lines
     private ArrayList<ArrayList> tubeList = new ArrayList<>(); //Zusammenhängende Boxen mit zwei Linien, zu offenen Linien
-    private ArrayList<Box> boxList;
-    private int selectedLine = 0;
-    private final int row;
-    private final int col;
-    private BoxNeighbours boxNeighbours;
+    private ArrayList<Box> boxList; //Enthält die Liste der Boxen des aktuellen Spieles
+    private int selectedLine = 0; //Linie welche markiert werden soll
+    private final int row; //Reihenanzahl des Spiels
+    private final int col;//Kolonenanzahl des Spiels
+    private BoxNeighbours boxNeighbours; //Errechnet die Nachbarn der Boxen
     
-
+    /**
+     * 
+     * @param color Farbe des AI-Players
+     * @param boxlist Liste der Boxen des aktuellen Spiels
+     * @param row anz. Reihen des Spiels
+     * @param col anz. Kolonen des Spiels
+     */
     public AI(Color color, ArrayList<Box> boxlist, int row, int col){
         super(color);
         this.boxList = boxlist;
@@ -50,6 +56,10 @@ public class AI extends Player implements IPlayer {
         }
     }
     
+    /**
+     * Schliesse eine Box welche schon drei markierte Linien hatte
+     * @return konnte eine Box gefüllt werden
+     */
     private boolean setFourthLine(){
         boolean foundLine = false;
         Box box = box3Line.get(0);
@@ -72,6 +82,10 @@ public class AI extends Player implements IPlayer {
             return foundLine;
     }
     
+    /**
+     * Ziehe den ersten Strich
+     * @return Konnte erster Strich gezogen werden
+     */
     private boolean setFirstLine(){
         //BoxC = CenterBox  boxLoop = soll Nachbarsbox aus boxList finden
         boolean foundLine = false;
@@ -182,6 +196,10 @@ public class AI extends Player implements IPlayer {
         return foundLine;
     }
     
+    /**
+     * Ziehe den zweiten Strich einer Box
+     * @return konnte ein zweiter Strich gezogen werden
+     */
     private boolean setSecondLine(){
         //BoxC = CenterBox  boxLoop = soll Nachbarsbox aus boxList finden
         boolean foundLine = false;
@@ -289,7 +307,12 @@ public class AI extends Player implements IPlayer {
         
         return foundLine;
     }
-       
+    
+    /**
+     * 
+     * @param boxC ist die aktuelle Box
+     * @return Gibt die BoxCID und die Anzahl markierter Linien des nördlichen Nachbarn zurück
+     */
     private NeighbourValues checkLineN(Box boxC){
         if(boxC.getLineN().getColor()== Color.LIGHT_GRAY){
                 int boxNid = boxNeighbours.getBoxN(boxC.getId());
@@ -299,7 +322,7 @@ public class AI extends Player implements IPlayer {
                    return new NeighbourValues(boxC.getLineN().getId(), 5);
                 }
                 else{
-                    //Suche boxN
+                    //Suche boxN Könnte mit getBox vereinfacht werden.
                     for(Box boxLoop : boxList){
                         //Prüfe ID
                         if(boxLoop.getId()== boxNid){
@@ -398,6 +421,10 @@ public class AI extends Player implements IPlayer {
     return new NeighbourValues(-1,-1);        
     }
     
+    /**
+     * 
+     * @return konnte eine dritte Linie markiert werden.
+     */
     private boolean setThirdLine(){
         this.setTubeList();
         ArrayList<Box> smallestTube = tubeList.get(0);
@@ -421,6 +448,10 @@ public class AI extends Player implements IPlayer {
         return true;
     }
     
+    /**
+     * Erstellt eine Liste mit aneinanderhängenden Boxen 
+     * welche zwei markierte Linien haben.
+     */
     private void setTubeList(){
         ArrayList<Box> checkedBoxes = new ArrayList<>();
         Box currentBox;
@@ -469,12 +500,18 @@ public class AI extends Player implements IPlayer {
         }
     }
     
+    /**
+     * 
+     * @param id BoxID
+     * @return Gibt die Box zurück mit der ausgewählten ID
+     */
     private Box getBox(int id){
         for(Box box : boxList){
             if(box.getId() == id){
                 return box;
             }
         }
+        System.out.println("Keine gültige Box gefunden daher wurde eine neue generiert");
         return new Box(1000);
     }
 
@@ -482,21 +519,34 @@ public class AI extends Player implements IPlayer {
     public void act() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
+    /**
+     * 
+     * @return gibt die Linie zurück welche ausgewählt werden soll.
+     */
     @Override
     public int getTurn() {
         this.sortBoxes();
-        this.setRandomTurn();
+        this.setAITurn();
         int result = selectedLine;
+        selectedLine = 0;
         return result;
     }
     
-    
+    /**
+     * Versuche zuerst eine Box zu schliessen, dann zweite, dann erste und wenn
+     * nichts mehr geht eine dritte Linie einer Box zu ziehen.
+     * Falls davon nichts klappe, setze eine zufällige Linie.
+     * Leere danach alle Arrays.
+     */
     private void setAITurn(){
         if(setFourthLine()){}
         else if(setSecondLine()){}
         else if(setFirstLine()){}
         else if(setThirdLine()){}
+        else{
+            setRandomTurn();
+        }
         box0Line.clear();
         box1Line.clear();
         box2Line.clear();
@@ -504,7 +554,9 @@ public class AI extends Player implements IPlayer {
         tubeList.clear();
     }
     
-    
+    /**
+     * Besetze eine zufällige leere Linie
+     */
     private void setRandomTurn(){
         boolean impossibleBox = true;
         while(impossibleBox){
