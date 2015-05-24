@@ -56,11 +56,10 @@ public class GameController implements IBoxObserver, Runnable{
     public void setGameType(int gameType) {
         switch (gameType) {
             case 0: //local game
-                randomCpuPlayer = new RandomAI(Color.RED, boxList, rows, columns);
                 players[0] = localPlayer;
-                players[1] = randomCpuPlayer;
+                players[1] = localPlayer;
                 playerModels[0] = new Player(Color.BLUE);
-                playerModels[1] = randomCpuPlayer;
+                playerModels[1] = new Player(Color.RED);
                 break;
             case 1: //network game
                 break;
