@@ -8,6 +8,7 @@ package dotsandboxes;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,7 +21,7 @@ import java.nio.channels.FileChannel;
 public class StorageGame {
     
     private PrintWriter printWriter;
-    private static String pathLogFile = "./ressources/logFile";
+    private static String pathLogFile = "./logFile";
 
     private int rows;
     private int columns;
@@ -85,8 +86,14 @@ public class StorageGame {
         FileChannel inputChannel = null;
         FileChannel outputChannel = null;
         try {
+            
+            if(dest.exists()) {
+               dest.delete();
+            }
+            dest.createNewFile();
+            
             inputChannel = new FileInputStream(logfile).getChannel();
-            outputChannel = new FileInputStream(dest).getChannel();
+            outputChannel = new FileOutputStream(dest).getChannel();
             outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
             inputChannel.close();
             outputChannel.close();

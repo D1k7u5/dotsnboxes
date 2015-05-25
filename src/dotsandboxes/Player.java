@@ -44,6 +44,7 @@ public class Player {
     public ArrayList<Integer> getBoxes() {
         return ownBoxes;
     }
+    
 
     void reset() {
         ownBoxes.removeAll(ownBoxes);

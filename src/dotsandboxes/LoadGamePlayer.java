@@ -50,10 +50,7 @@ public class LoadGamePlayer implements IPlayer {
                 
                 listOfTurns[0].add(Integer.parseInt(tokens[1]));
                 listOfTurns[1].add(Integer.parseInt(tokens[3]));
-//                listOfTurns[2].add(Integer.parseInt(tokens[5]));
-//                listOfTurns[3].add(Integer.parseInt(tokens[6]));
-//                listOfTurns[4].add(Integer.parseInt(tokens[7]));
-                numberOfTurns++;
+            //    numberOfTurns++;
                 }
                 
         }
@@ -97,8 +94,9 @@ public class LoadGamePlayer implements IPlayer {
             turn = -2;
         }
         else{
-            numberOfTurns--;
-            turn = listOfTurns[1].remove(numberOfTurns);
+            
+            turn = listOfTurns[1].remove(0);
+            //numberOfTurns++;
             
         }
         

@@ -115,7 +115,23 @@ public class GameController implements IBoxObserver, Runnable{
             checkForAWinner();
             int line = players[playerIndex].getTurn();
             if(line == -2) {
+                // game load successful, change Playermodels to continue playing
+                int victoryPlayer0 = playerModels[0].getVictories();
+                int victoryPlayer1 = playerModels[1].getVictories();
+                ArrayList<Integer> ownBoxesPlayer0 = playerModels[0].getBoxes();
+                ArrayList<Integer> ownBoxesPlayer1 = playerModels[1].getBoxes();
+                
                 this.setGameType(loadGamePlayer.getGameType());
+                
+                playerModels[0].setVictories(victoryPlayer0);
+                playerModels[0].setVictories(victoryPlayer1);
+                for(Integer box : ownBoxesPlayer0) {
+                    playerModels[0].addBox(box);
+                }
+                for(Integer box : ownBoxesPlayer1) {
+                    playerModels[1].addBox(box);
+                }
+                
             }
             else if(line != -1){
                 gameSaver.saveTurn(playerIndex, line, playerModels[playerIndex].getColor());
