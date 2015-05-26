@@ -112,10 +112,10 @@ public class Box {
     public int getNumberOfSetedLines(){
         int counter = 0;
         
-        if(lineN != null){counter++;}
-        if(lineE != null){counter++;}
-        if(lineS != null){counter++;}
-        if(lineW != null){counter++;}
+        if(lineN.getColor() == Color.LIGHT_GRAY){counter++;}
+        if(lineE.getColor() == Color.LIGHT_GRAY){counter++;}
+        if(lineS.getColor() == Color.LIGHT_GRAY){counter++;}
+        if(lineW.getColor() == Color.LIGHT_GRAY){counter++;}
         
         return counter;
     }
