@@ -444,13 +444,13 @@ public class AI extends Player implements IPlayer {
                     smallestTube = list;
                 }
             }
-            if (getBox(boxNeighbours.getBoxN(smallestTube.get(0).getId())).getNumberOfSetedLines() == 2) {
+            if(smallestTube.get(0).getLineN().getColor() == Color.LIGHT_GRAY){
                 selectedLine = smallestTube.get(0).getLineN().getId();
-            } else if (getBox(boxNeighbours.getBoxE(smallestTube.get(0).getId())).getNumberOfSetedLines() == 2) {
+            } else if(smallestTube.get(0).getLineE().getColor() == Color.LIGHT_GRAY){
                 selectedLine = smallestTube.get(0).getLineE().getId();
-            } else if (getBox(boxNeighbours.getBoxS(smallestTube.get(0).getId())).getNumberOfSetedLines() == 2) {
+            } else if(smallestTube.get(0).getLineS().getColor() == Color.LIGHT_GRAY){
                 selectedLine = smallestTube.get(0).getLineS().getId();
-            } else if (getBox(boxNeighbours.getBoxW(smallestTube.get(0).getId())).getNumberOfSetedLines() == 2) {
+            } else if(smallestTube.get(0).getLineW().getColor() == Color.LIGHT_GRAY){
                 selectedLine = smallestTube.get(0).getLineW().getId();
             }
             result = true;
