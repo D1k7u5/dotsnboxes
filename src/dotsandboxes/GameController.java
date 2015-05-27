@@ -159,9 +159,9 @@ public class GameController implements IBoxObserver, Runnable{
             playerModels[playerIndex].addVictory();
             observer.winnerIs("Player " + (playerIndex+1) + " wins!!");
             resetGame();
-        }else if ((playerModels[0].getBoxes().size() == playerModels[1].getBoxes().size()) 
-                && (playerModels[0].getBoxes().size() == (boxList.size()/2))){
-            System.out.println("No winner! DRAW!");
+        }else if ((((boxList.size() % 2) == 0)) && (playerModels[0].getBoxes().size() == playerModels[1].getBoxes().size()) 
+                && ((playerModels[0].getBoxes().size() == (boxList.size()/2)))){
+            System.out.println("No winner! DRAW! "+ (boxList.size() % 2));
             observer.winnerIs("No winner! DRAW!");
             resetGame();
         }
