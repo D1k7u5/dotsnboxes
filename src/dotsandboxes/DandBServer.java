@@ -23,9 +23,9 @@ public class DandBServer implements Runnable,IPlayer {
     private ServerSocket sSocket;
     private int data;
     
-    public DandBServer(){
+    public DandBServer(int port){
         try {
-            sSocket = new ServerSocket(13);
+            sSocket = new ServerSocket(port);
         } catch (IOException ex) {
             Logger.getLogger(DandBServer.class.getName()).log(Level.SEVERE, null, ex);
         }
