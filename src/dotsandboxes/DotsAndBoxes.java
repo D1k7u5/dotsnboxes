@@ -7,7 +7,6 @@ package dotsandboxes;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -53,7 +52,7 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
         super("DotsAndBoxes");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         
-        //Menu
+//Menu
         menuPanel = new JPanel();
         start = new JButton("Start");
         btnLoadGame=new JButton("Load Game");
@@ -69,9 +68,9 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
         loc.setSelected(true);
         net = new JRadioButton();
         com = new JRadioButton();
-        //Game view panel
+//Game view panel
         gameView = new GPanel();
-        //dummy panel for layout
+//dummy panel for layout
         dummyPanel1 = new JPanel();
         dummyPanel2 = new JPanel();
         dummyPanel3 = new JPanel();
@@ -81,12 +80,11 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
         rbtnClient = new JRadioButton();
         rbtnServer = new JRadioButton();
         btnStartNet = new JButton("Start");
-        //stats Panel
+//stats Panel
         statsPanel = new JPanel();
         statsPanel.setLayout(new BoxLayout(statsPanel,BoxLayout.PAGE_AXIS));
         JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayout(3,2));
-        //panel1.setPreferredSize(new Dimension(100,50));
         Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
         panel1.setBorder(loweredetched);
         labelRound = new JLabel("Round : ");
@@ -103,7 +101,6 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
         
         JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayout(3,2));
-        //panel2.setPreferredSize(new Dimension(100,50));
         panel2.setBorder(loweredetched);
         labelGamesWon = new JLabel("Games Won :");
         labelP1g = new JLabel("P1 :");
