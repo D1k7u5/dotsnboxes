@@ -158,16 +158,16 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
     }
     
     public void setGameView(int rows, int columns){
-        //Game view panel
         gameView = new GPanel(rows,columns,this.gameType);   
         this.removeMenuView();
-        //this.setLayout(new BorderLayout());
-        //this.add(dummyPanel1,BorderLayout.NORTH);
         this.add(statsPanel,BorderLayout.WEST);
-        //this.add(dummyPanel3,BorderLayout.SOUTH);
-        //this.add(dummyPanel4,BorderLayout.EAST);
         this.add(gameView,BorderLayout.CENTER);
         repaint();
+        this.pack();
+    }
+    public void removeGameView(){
+        this.remove(statsPanel);
+        this.remove(gameView);
         this.pack();
     }
     private void setMenuView() {
@@ -181,10 +181,7 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
     }
     public void removeMenuView(){
         this.remove(menuPanel);
-        //this.remove(dummyPanel1);
-        //this.remove(dummyPanel2);
         this.remove(dummyPanel3);
-        //this.remove(dummyPanel4);
     }
     private void setNetworkConnectionView(){
         this.removeMenuView();
@@ -305,7 +302,8 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
                 this.setNetworkServerView();
             }
         }else if(e.getSource() == this.btnNewGame){
-            //go back to menu view
+            this.removeGameView();
+            this.setMenuView();
         }else if(e.getSource() == this.btnLoadGame){
             JFileChooser fc = new JFileChooser();
             fc.setCurrentDirectory(new File(System.getProperty("user.dir") + "/ressources/"));
