@@ -26,6 +26,7 @@ public class LoadGamePlayer implements IPlayer {
     private int columns;
     private int gamesP1Won;
     private int gamesP2Won;
+    private int startPlayerID = 0;
     
     public LoadGamePlayer() {
         
@@ -44,7 +45,7 @@ public class LoadGamePlayer implements IPlayer {
         gamesP2Won = Integer.parseInt(bufferedReader.readLine().substring(12));
         
         String line;
-
+        
         while (( line = bufferedReader.readLine()) != null) {
                 String[] tokens = line.split(" ");
                 
@@ -52,6 +53,8 @@ public class LoadGamePlayer implements IPlayer {
                 listOfTurns[1].add(Integer.parseInt(tokens[3]));
             //    numberOfTurns++;
                 }
+        
+        startPlayerID = listOfTurns[0].get(0);
                 
         }
     
@@ -72,11 +75,15 @@ public class LoadGamePlayer implements IPlayer {
         return gameType;
     }
     
-    public int getGamesP1Won () {
+    public int getStartPlayerID() {
+        return startPlayerID;
+    }
+    
+    public int getVictoriesP1 () {
         return gamesP1Won;
     }
     
-    public int getGamesP2Won () {
+    public int getVictoriesP2 () {
         return gamesP2Won;
     }
 

@@ -27,16 +27,16 @@ public class StorageGame {
     private int columns;
     private int gameType;
     
-    public StorageGame(int gameType, int rows, int columns) {
+    public StorageGame(int gameType, int rows, int columns, int victoriesP1, int victoriesP2) {
         this.gameType = gameType;
         this.rows = rows;
         this.columns = columns;
-        reInitFile(0, 0);
+        reInitFile(victoriesP1, victoriesP2);
         
    
     }
     
-    public void reInitFile(int gamesWonP1, int gamesWonP2) {
+    public void reInitFile(int victoriesP1, int victoriesP2) {
         
         try (FileWriter logfile = new FileWriter(pathLogFile))
         {   
@@ -45,8 +45,8 @@ public class StorageGame {
             printWriter.println("GameType: " + gameType);
             printWriter.println("Rows: " + rows);
             printWriter.println("Columns: " + columns);
-            printWriter.println("GamesWonP1: " + gamesWonP1);
-            printWriter.println("GamesWonP2: " + gamesWonP2);
+            printWriter.println("GamesWonP1: " + victoriesP1);
+            printWriter.println("GamesWonP2: " + victoriesP2);
             printWriter.close();
             
         } catch (IOException e) {

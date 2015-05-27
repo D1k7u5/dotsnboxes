@@ -48,8 +48,14 @@ public class GameController implements IBoxObserver, Runnable{
         for(int i = 0; i < boxList.size(); i++){
             boxList.get(i).setObserver(this);
         } 
-        
-        gameSaver = new StorageGame(type, rows, columns);
+
+        if(type == 3) {
+            type = loadGamePlayer.getGameType();
+            if(loadGamePlayer.getStartPlayerID() == 1) {
+                this.changePlayer();
+            }
+        }
+        gameSaver = new StorageGame(type, rows, columns,playerModels[0].getVictories(), playerModels[1].getVictories());
         
     }
     
@@ -76,7 +82,9 @@ public class GameController implements IBoxObserver, Runnable{
                 players[0] = loadGamePlayer;
                 players[1] = loadGamePlayer;
                 playerModels[0] = new Player(Color.BLUE);
+                playerModels[0].setVictories(loadGamePlayer.getVictoriesP1());
                 playerModels[1] = new Player(Color.RED);
+                playerModels[1].setVictories(loadGamePlayer.getVictoriesP2());
                 break;
             case 4: //computer random game
                 randomCpuPlayer = new RandomAI(Color.RED, boxList, rows, columns);
