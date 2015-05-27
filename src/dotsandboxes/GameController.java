@@ -41,9 +41,10 @@ public class GameController implements IBoxObserver, Runnable{
         this.rows = rows;
         this.columns = columns;
         
+        boxList = boxes;
         setGameType(type);
         
-        boxList = boxes;
+        
         for(int i = 0; i < boxList.size(); i++){
             boxList.get(i).setObserver(this);
         } 

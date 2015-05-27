@@ -44,15 +44,25 @@ public class AI extends Player implements IPlayer {
     /**
      * Sortiert Boxen nach anzahl Linien in ArrayLists
      */
-    private void sortBoxes(){
-        for(Box box : boxList){
-            int setedLines;
-            setedLines = box.getNumberOfSetedLines();
-            
-            if(setedLines == 0){box0Line.add(box);}
-            if(setedLines == 1){box1Line.add(box);}
-            if(setedLines == 2){box2Line.add(box);}
-            if(setedLines == 3){box3Line.add(box);}
+    private void sortBoxes() {
+        if (this.boxList != null) {
+            for (Box box : boxList) {
+                int setedLines;
+                setedLines = box.getNumberOfSetedLines();
+
+                if (setedLines == 0) {
+                    box0Line.add(box);
+                }
+                if (setedLines == 1) {
+                    box1Line.add(box);
+                }
+                if (setedLines == 2) {
+                    box2Line.add(box);
+                }
+                if (setedLines == 3) {
+                    box3Line.add(box);
+                }
+            }
         }
     }
     
@@ -60,26 +70,25 @@ public class AI extends Player implements IPlayer {
      * Schliesse eine Box welche schon drei markierte Linien hatte
      * @return konnte eine Box gefüllt werden
      */
-    private boolean setFourthLine(){
+    private boolean setFourthLine() {
         boolean foundLine = false;
-        Box box = box3Line.get(0);
-            if(box.getLineN().getColor()== Color.LIGHT_GRAY){
+        if (!box3Line.isEmpty()) {
+            Box box = box3Line.get(0);
+            if (box.getLineN().getColor() == Color.LIGHT_GRAY) {
                 selectedLine = box.getLineN().getId();
                 foundLine = true;
-            }
-            else if(box.getLineE().getColor()== Color.LIGHT_GRAY){
+            } else if (box.getLineE().getColor() == Color.LIGHT_GRAY) {
                 selectedLine = box.getLineE().getId();
                 foundLine = true;
-            }
-            else if(box.getLineS().getColor()== Color.LIGHT_GRAY){
+            } else if (box.getLineS().getColor() == Color.LIGHT_GRAY) {
                 selectedLine = box.getLineS().getId();
                 foundLine = true;
-            }
-            else if(box.getLineW().getColor() == Color.LIGHT_GRAY){
+            } else if (box.getLineW().getColor() == Color.LIGHT_GRAY) {
                 selectedLine = box.getLineW().getId();
                 foundLine = true;
             }
-            return foundLine;
+        }
+        return foundLine;
     }
     
     /**
@@ -96,7 +105,7 @@ public class AI extends Player implements IPlayer {
         int lineNeighbourWith2 = -1;
         
         //Durchlaufe Array von Boxen mit einer Linie
-        for(int i =0; i<= box0Line.size();i++){
+        for(int i =0; i< box0Line.size();i++){
             boxC = box0Line.get(i);
             //Prüfe Linie im Norden & Prüfe Nachbar wenn Linie frei
             
@@ -210,7 +219,7 @@ public class AI extends Player implements IPlayer {
         int lineNeighbourWith2 = -1;
         
         //Durchlaufe Array von Boxen mit einer Linie
-        for(int i =0; i<= box1Line.size();i++){
+        for(int i =0; i< box1Line.size();i++){
             boxC = box1Line.get(i);
             //Prüfe Linie im Norden & Prüfe Nachbar wenn Linie frei
             
@@ -425,27 +434,28 @@ public class AI extends Player implements IPlayer {
      * 
      * @return konnte eine dritte Linie markiert werden.
      */
-    private boolean setThirdLine(){
+    private boolean setThirdLine() {
+        boolean result = false;
         this.setTubeList();
-        ArrayList<Box> smallestTube = tubeList.get(0);
-        for(ArrayList list : tubeList){
-            if(smallestTube.size() > list.size()){
-                smallestTube = list;
+        if (!tubeList.isEmpty()) {
+            ArrayList<Box> smallestTube = tubeList.get(0);
+            for (ArrayList list : tubeList) {
+                if (smallestTube.size() > list.size()) {
+                    smallestTube = list;
+                }
             }
+            if (getBox(boxNeighbours.getBoxN(smallestTube.get(0).getId())).getNumberOfSetedLines() == 2) {
+                selectedLine = smallestTube.get(0).getLineN().getId();
+            } else if (getBox(boxNeighbours.getBoxE(smallestTube.get(0).getId())).getNumberOfSetedLines() == 2) {
+                selectedLine = smallestTube.get(0).getLineE().getId();
+            } else if (getBox(boxNeighbours.getBoxS(smallestTube.get(0).getId())).getNumberOfSetedLines() == 2) {
+                selectedLine = smallestTube.get(0).getLineS().getId();
+            } else if (getBox(boxNeighbours.getBoxW(smallestTube.get(0).getId())).getNumberOfSetedLines() == 2) {
+                selectedLine = smallestTube.get(0).getLineW().getId();
+            }
+            result = true;
         }
-        if(getBox(boxNeighbours.getBoxN(smallestTube.get(0).getId())).getNumberOfSetedLines() ==2){
-            selectedLine = smallestTube.get(0).getLineN().getId();
-        }
-        else if(getBox(boxNeighbours.getBoxE(smallestTube.get(0).getId())).getNumberOfSetedLines() ==2){
-            selectedLine = smallestTube.get(0).getLineE().getId();
-        }
-        else if(getBox(boxNeighbours.getBoxS(smallestTube.get(0).getId())).getNumberOfSetedLines() ==2){
-            selectedLine = smallestTube.get(0).getLineS().getId();
-        }
-        else if(getBox(boxNeighbours.getBoxW(smallestTube.get(0).getId())).getNumberOfSetedLines() ==2){
-            selectedLine = smallestTube.get(0).getLineW().getId();
-        }
-        return true;
+        return result;
     }
     
     /**
