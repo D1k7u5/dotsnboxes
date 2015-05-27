@@ -45,6 +45,7 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
     private GPanel gameView;
     private int gameType = 0;
     private JPanel netConnectionView;
+    private boolean gameActive = false;
     
     private ArrayList<Line> lineList;
     
@@ -149,9 +150,6 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
         this.setMenuView();
         this.setResizable(false);
         this.setVisible(true);
-        
-        Thread t = new Thread(this);
-        t.start();
     }
     
     public void setGameView(int rows, int columns){
@@ -161,11 +159,16 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
         this.add(gameView,BorderLayout.CENTER);
         repaint();
         this.pack();
+        gameActive = true;
+        Thread t = new Thread(this);
+        t.start();
     }
     public void removeGameView(){
         this.remove(statsPanel);
         this.remove(gameView);
+        this.gameView = null;
         this.pack();
+        gameActive = false;
     }
     private void setMenuView() {
         this.setLayout(new BorderLayout());
@@ -222,7 +225,7 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
     
     @Override
     public void run() {
-        while(true){
+        while(gameActive){
             this.repaint();
             if(Integer.parseInt(this.lblP1BoxesCnt.getText()) != this.gameView.getNrOfBoxes(0)){
                 this.lblP1BoxesCnt.setText(Integer.toString(this.gameView.getNrOfBoxes(0)));
