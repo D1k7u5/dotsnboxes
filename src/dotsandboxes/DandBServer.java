@@ -33,7 +33,9 @@ public class DandBServer implements Runnable,IPlayer {
 
     public boolean connectClient(){
         try {
+            System.out.println("wait for client...");
             client = sSocket.accept();
+            System.out.println("client accepted");
             new Thread(this).start();
             return true;
         } catch (IOException ex) {
