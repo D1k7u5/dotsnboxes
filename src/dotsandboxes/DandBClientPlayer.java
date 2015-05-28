@@ -18,10 +18,11 @@ public class DandBClientPlayer implements IPlayer,Runnable {
     private Socket server;
     private String host = "localhost";
     private int port = 13;
+    private int data;
     
     DandBClientPlayer(){
         try {
-            Socket server = new Socket(host,port);
+            server = new Socket(host,port);
         } catch (IOException ex) {
             Logger.getLogger(DandBClientPlayer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -36,7 +37,9 @@ public class DandBClientPlayer implements IPlayer,Runnable {
 
     @Override
     public int getTurn() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int selectedLine = data;
+        data = -1;
+        return selectedLine;    
     }
 
     @Override
