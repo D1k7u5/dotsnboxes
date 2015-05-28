@@ -46,7 +46,7 @@ public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCal
 
         addMouseListener(this);
         selectedLine = -1;
-        lineDetector = new LineDetection(40 + 16, 24, 80, columns, row);
+        lineDetector = new LineDetection(40 + 16, 24, 80, col, row);
         
         gameController = new GameController(this, this, boxList,type, row, col);
         gameController.addWinnerObserver(this);
@@ -125,8 +125,8 @@ public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCal
         int c = 0;
         int index = 1;
         int sl = 71;
-        for(int i=1 ; i<=col ; i++){
-                for(int n=1 ; n<=row ; n++){
+        for(int i=1 ; i<=row ; i++){
+                for(int n=1 ; n<=col ; n++){
                     if(p1.getBoxes().contains(index)){
                         g.setColor(p1.getColor());
                         g.fillRect(x+104*c, y+104*r, sl, sl);
