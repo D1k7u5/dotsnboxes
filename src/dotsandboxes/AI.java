@@ -438,22 +438,46 @@ public class AI extends Player implements IPlayer {
         boolean result = false;
         this.setTubeList();
         if (!tubeList.isEmpty()) {
-            ArrayList<Box> smallestTube = tubeList.get(0);
-            for (ArrayList list : tubeList) {
-                if (smallestTube.size() > list.size()) {
-                    smallestTube = list;
+            if(tubeList.size()%2 ==1){
+                ArrayList<Box> smallestTube = tubeList.get(0);
+                for (ArrayList list : tubeList) {
+                    if (smallestTube.size() > list.size()) {
+                        smallestTube = list;
+                    }
                 }
-            }
-            if(smallestTube.get(0).getLineN().getColor() == Color.LIGHT_GRAY){
-                selectedLine = smallestTube.get(0).getLineN().getId();
-            } else if(smallestTube.get(0).getLineE().getColor() == Color.LIGHT_GRAY){
-                selectedLine = smallestTube.get(0).getLineE().getId();
-            } else if(smallestTube.get(0).getLineS().getColor() == Color.LIGHT_GRAY){
-                selectedLine = smallestTube.get(0).getLineS().getId();
-            } else if(smallestTube.get(0).getLineW().getColor() == Color.LIGHT_GRAY){
-                selectedLine = smallestTube.get(0).getLineW().getId();
-            }
-            result = true;
+                if(smallestTube.get(0).getLineN().getColor() == Color.LIGHT_GRAY){
+                    selectedLine = smallestTube.get(0).getLineN().getId();
+                } else if(smallestTube.get(0).getLineE().getColor() == Color.LIGHT_GRAY){
+                    selectedLine = smallestTube.get(0).getLineE().getId();
+                } else if(smallestTube.get(0).getLineS().getColor() == Color.LIGHT_GRAY){
+                    selectedLine = smallestTube.get(0).getLineS().getId();
+                } else if(smallestTube.get(0).getLineW().getColor() == Color.LIGHT_GRAY){
+                    selectedLine = smallestTube.get(0).getLineW().getId();
+                }
+                result = true;
+            } else{
+                ArrayList<Box> smallestTube = tubeList.get(0);
+                ArrayList<Box> secondSmallestTube = tubeList.get(0);
+                for (ArrayList list : tubeList) {
+                    if (smallestTube.size() > list.size()) {
+                        secondSmallestTube = smallestTube;
+                        smallestTube = list;  
+                    }
+                    else if(secondSmallestTube.size() > list.size()){
+                        secondSmallestTube = list;
+                    }
+                }
+                if(smallestTube.get(0).getLineN().getColor() == Color.LIGHT_GRAY){
+                    selectedLine = smallestTube.get(0).getLineN().getId();
+                } else if(smallestTube.get(0).getLineE().getColor() == Color.LIGHT_GRAY){
+                    selectedLine = smallestTube.get(0).getLineE().getId();
+                } else if(smallestTube.get(0).getLineS().getColor() == Color.LIGHT_GRAY){
+                    selectedLine = smallestTube.get(0).getLineS().getId();
+                } else if(smallestTube.get(0).getLineW().getColor() == Color.LIGHT_GRAY){
+                    selectedLine = smallestTube.get(0).getLineW().getId();
+                }
+                result = true;
+            }    
         }
         return result;
     }
