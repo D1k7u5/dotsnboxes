@@ -76,14 +76,14 @@ public class GameController implements IBoxObserver, Runnable{
                     this.serverPlayer = new DandBServer(13);
                     players[0] = localPlayer;
                     players[1] = serverPlayer;
-                    playerModels[1] = new Player(Color.red);
+                    playerModels[0] = new Player(Color.red);
                     playerModels[1] = new Player(Color.blue);
                     this.serverPlayer.connectClient();
                 }else if(netMode == 1){//play as client
                     this.clientPlayer = new DandBClientPlayer();
                     players[0] = clientPlayer;
                     players[1] = localPlayer;
-                    playerModels[1] = new Player(Color.blue);
+                    playerModels[0] = new Player(Color.blue);
                     playerModels[1] = new Player(Color.red);
                 }
                 break;
