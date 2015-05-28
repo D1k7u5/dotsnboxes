@@ -245,12 +245,7 @@ public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCal
     public void mouseExited(MouseEvent e) {
         //    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public void act() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     @Override
     public int getTurn() {
         int result = selectedLine;

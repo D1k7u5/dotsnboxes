@@ -91,9 +91,6 @@ public class LoadGamePlayer implements IPlayer {
     public static void setFileToLoad(File gameToLoad) {
         LoadGamePlayer.gameToLoad = gameToLoad;
     }
-    
-    @Override
-    public void act() { } // do Nothing
 
     @Override
     public int getTurn() {

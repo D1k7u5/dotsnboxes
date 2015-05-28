@@ -28,12 +28,6 @@ public class DandBClientPlayer implements IPlayer,Runnable {
         }
     }
 
-    @Override
-    public void act() {
-        while(true){
-            
-        }
-    }
 
     @Override
     public int getTurn() {

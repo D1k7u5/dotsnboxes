@@ -549,11 +549,6 @@ public class AI extends Player implements IPlayer {
         return new Box(1000);
     }
 
-    @Override
-    public void act() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
     /**
      * 
      * @return gibt die Linie zurück welche ausgewählt werden soll.

@@ -11,6 +11,5 @@ package dotsandboxes;
  */
 public interface IPlayer {
     
-    public void act();
     public int getTurn();
 }
