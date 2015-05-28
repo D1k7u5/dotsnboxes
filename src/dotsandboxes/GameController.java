@@ -17,6 +17,8 @@ import java.util.logging.Logger;
  */
 public class GameController implements IBoxObserver, Runnable{
 
+    private boolean loadFullHistory = true;
+    
     private ArrayList<Box> boxList;
     private IPlayer players[] = new IPlayer[2];
     private Player playerModels[] = new Player[2];
@@ -148,7 +150,7 @@ public class GameController implements IBoxObserver, Runnable{
                 this.setGameType(loadGamePlayer.getGameType());
                 
                 playerModels[0].setVictories(victoryPlayer0);
-                playerModels[0].setVictories(victoryPlayer1);
+                playerModels[1].setVictories(victoryPlayer1);
                 for(Integer box : ownBoxesPlayer0) {
                     playerModels[0].addBox(box);
                 }
@@ -200,7 +202,9 @@ public class GameController implements IBoxObserver, Runnable{
         playerModels[0].reset();
         playerModels[1].reset();
         
-        gameSaver.reInitFile(playerModels[0].getVictories(), playerModels[1].getVictories());
+        if(!loadFullHistory) {
+            gameSaver.reInitFile(playerModels[0].getVictories(), playerModels[1].getVictories());
+        }
     }
     
     public void setDifficulty(int diff){
