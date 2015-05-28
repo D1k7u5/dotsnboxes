@@ -31,10 +31,11 @@ public class GameController implements IBoxObserver, Runnable{
     private IPlayer localPlayer;    
     private LoadGamePlayer loadGamePlayer;
     private StorageGame gameSaver;
+    private DandBServer serverPlayer;
+    private DandBClientPlayer clientPlayer;
+    private int netMode; //0 = play as server, 1 = play as client
 
-    
-    
-    
+       
     public GameController(IPlayer p1, IPlayer p2, ArrayList boxes, int type, int rows, int columns) {
         
         localPlayer = p1;
@@ -69,6 +70,20 @@ public class GameController implements IBoxObserver, Runnable{
                 playerModels[1] = new Player(Color.RED);
                 break;
             case 1: //network game
+                if(netMode == 0){//play as server
+                    this.serverPlayer = new DandBServer(13);
+                    players[0] = localPlayer;
+                    players[1] = serverPlayer;
+                    playerModels[1] = new Player(Color.red);
+                    playerModels[1] = new Player(Color.blue);
+                    this.serverPlayer.connectClient();
+                }else if(netMode == 1){//play as client
+                    this.clientPlayer = new DandBClientPlayer();
+                    players[0] = clientPlayer;
+                    players[1] = localPlayer;
+                    playerModels[1] = new Player(Color.blue);
+                    playerModels[1] = new Player(Color.red);
+                }
                 break;
             case 2: //computer game
                 cpuPlayer = new AI(Color.RED, boxList, rows, columns);
@@ -195,5 +210,10 @@ public class GameController implements IBoxObserver, Runnable{
     void addWinnerObserver(GPanel aThis) {
         observer = aThis;
     }
+    
+    public void setNetMode(int netMode) {
+        this.netMode = netMode;
+    }
+
     
 }
