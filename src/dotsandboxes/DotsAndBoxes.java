@@ -153,8 +153,9 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
     }
     
     public void setGameView(int rows, int columns){
-        gameView = new GPanel(rows,columns,this.gameType);   
+        gameView = new GPanel(rows,columns,this.gameType);
         this.removeMenuView();
+        this.removeNetworkConnectionView();
         this.add(statsPanel,BorderLayout.WEST);
         this.add(gameView,BorderLayout.CENTER);
         repaint();
@@ -258,6 +259,7 @@ public class DotsAndBoxes extends JFrame implements Runnable,ActionListener{
                         break;
                     case 1:
                         this.setNetworkConnectionView();
+                        this.setGameView(Integer.parseInt(this.fieldRow.getText()),Integer.parseInt(this.fieldCol.getText()));
                         break;
                     case 2:
                         if(Integer.parseInt(this.fieldRow.getText())>6 || Integer.parseInt(this.fieldCol.getText())>8){
