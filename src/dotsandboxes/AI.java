@@ -454,6 +454,8 @@ public class AI extends Player implements IPlayer {
                 } else if(smallestTube.get(0).getLineW().getColor() == Color.LIGHT_GRAY){
                     selectedLine = smallestTube.get(0).getLineW().getId();
                 }
+                System.out.println("smallestTube: " + smallestTube.get(0).getId() +"\n"+
+                        "tubeList size: "+ tubeList.size());
                 result = true;
             } else{
                 ArrayList<Box> smallestTube = tubeList.get(0);
@@ -467,15 +469,18 @@ public class AI extends Player implements IPlayer {
                         secondSmallestTube = list;
                     }
                 }
-                if(smallestTube.get(0).getLineN().getColor() == Color.LIGHT_GRAY){
-                    selectedLine = smallestTube.get(0).getLineN().getId();
-                } else if(smallestTube.get(0).getLineE().getColor() == Color.LIGHT_GRAY){
-                    selectedLine = smallestTube.get(0).getLineE().getId();
-                } else if(smallestTube.get(0).getLineS().getColor() == Color.LIGHT_GRAY){
-                    selectedLine = smallestTube.get(0).getLineS().getId();
-                } else if(smallestTube.get(0).getLineW().getColor() == Color.LIGHT_GRAY){
-                    selectedLine = smallestTube.get(0).getLineW().getId();
+                if(secondSmallestTube.get(0).getLineN().getColor() == Color.LIGHT_GRAY){
+                    selectedLine = secondSmallestTube.get(0).getLineN().getId();
+                } else if(secondSmallestTube.get(0).getLineE().getColor() == Color.LIGHT_GRAY){
+                    selectedLine = secondSmallestTube.get(0).getLineE().getId();
+                } else if(secondSmallestTube.get(0).getLineS().getColor() == Color.LIGHT_GRAY){
+                    selectedLine = secondSmallestTube.get(0).getLineS().getId();
+                } else if(secondSmallestTube.get(0).getLineW().getColor() == Color.LIGHT_GRAY){
+                    selectedLine = secondSmallestTube.get(0).getLineW().getId();
                 }
+                System.out.println("secondSmallestTube Box0: " + secondSmallestTube.get(0).getId() + "\n"
+                        + "smallestTube Box0: " +smallestTube.get(0).getId()+"\n"
+                        + "tubeList size: " + tubeList.size());
                 result = true;
             }    
         }
