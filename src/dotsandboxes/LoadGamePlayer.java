@@ -54,12 +54,13 @@ public class LoadGamePlayer implements IPlayer {
             //    numberOfTurns++;
                 }
         
-        startPlayerID = listOfTurns[0].get(0);
-                
+        if(!listOfTurns[0].isEmpty()) {
+            startPlayerID = listOfTurns[0].get(0);
+        }
         }
     
         catch(IOException e) {
-            
+            System.err.printf(e.getMessage());
         }
     }
     
