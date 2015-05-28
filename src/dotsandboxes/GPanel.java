@@ -32,7 +32,14 @@ public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCal
 
     public GPanel() {
     }
-
+    
+    /**
+     * 
+     * @param rows      Anzahl Reihen des Spielfeldes
+     * @param columns   Anzahl Kolonnen des Spielfeldes
+     * @param type      Typ des Spiels (lokal/netwerk/computer)
+     */
+    
     public GPanel(int rows, int columns, int type) {
         row = rows;
         col = columns;
@@ -63,7 +70,10 @@ public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCal
         this.drawLines(g2d);
         this.drawDotGrid(g2d);
     }
-
+    /**
+     *      Zeichnet die Punkte auf das Spielfeld
+     * @param g         Graphics Object zum draufzeichnen
+     */
     private void drawDotGrid(Graphics2D g) {
         int x = 40;
         int y = 40;
@@ -79,7 +89,10 @@ public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCal
             x = 40;
         }
     }
-
+    /**
+     *      Zeichnet die Linien auf die Position gemäss Line ID
+     * @param g         Graphics Object zum draufzeichnen
+     */
     private void drawLines(Graphics2D g) {
         int x = 63;
         int y = 44;
@@ -115,7 +128,10 @@ public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCal
             x = 45;
         }
     }
-    
+    /**
+     *      Zeichnet die Boxen auf Ihre Position gemäss Besitzer
+     * @param g         Graphics Object zum draufzeichnen
+     */
     private void drawBoxes(Graphics2D g){
         Player p1 = this.gameController.getPlayer(0);
         Player p2 = this.gameController.getPlayer(1);
@@ -129,10 +145,10 @@ public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCal
                 for(int n=1 ; n<=col ; n++){
                     if(p1.getBoxes().contains(index)){
                         g.setColor(p1.getColor());
-                        g.fillRect(x+104*c, y+104*r, sl, sl);
+                        g.fillRect(x+104*c, y+104*r+1, sl, sl);
                     }else if(p2.getBoxes().contains(index)){
                         g.setColor(p2.getColor());
-                        g.fillRect(x+104*c, y+104*r, sl, sl);
+                        g.fillRect(x+104*c, y+104*r+1, sl, sl);
                     }
                     index++;
                     c++;
@@ -142,6 +158,11 @@ public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCal
         }
     }
 
+    /**
+     *  Setzt die Anzahl Reihen und Kolonnen des Spielfeldes
+     * @param rows          Anzahl Reihen des Spielfeldes
+     * @param columns       Anzahl Kolonnen des Spielfeldes
+     */
     public void setDimensions(int rows, int columns) {
         row = rows;
         col = columns;
@@ -149,6 +170,9 @@ public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCal
         initLinesAndBoxes();
     }
 
+    /**
+     *  Weist jeder Box ihre Linien (Nord,Süd,Ost,West) zu
+     */
     private void initLinesAndBoxes() {
         for (int i = 1; i <= (((row + 1) * col) + ((col + 1) * row)); i++) {
             lineList.add(new Line(i));
@@ -175,6 +199,11 @@ public class GPanel extends JPanel implements MouseListener, IPlayer, IWinnerCal
         return col;
     }
     
+    /**
+     *  Gibt die Anzahl gewonnener Boxen eines Spielers zurück
+     * @param playerIndex   Index des Spielers (0=P1 , 1=P2)
+     * @return              Anzahl gewonnener Boxen, sonst 0
+     */
     public int getNrOfBoxes(int playerIndex){
         try{
             return gameController.getPlayer(playerIndex).getBoxes().size();
