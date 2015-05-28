@@ -31,12 +31,14 @@ public class DandBServer implements Runnable,IPlayer {
         }
     }
 
-    public void connectClient(){
+    public boolean connectClient(){
         try {
             client = sSocket.accept();
             new Thread(this).start();
+            return true;
         } catch (IOException ex) {
             Logger.getLogger(DandBServer.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
     @Override
